@@ -1,8 +1,7 @@
 package factory
 
 import (
-	"bookstore/domain/aggregate/customer/entities"
-	"bookstore/domain/aggregate/customer/event"
+	entities "bookstore/domain/aggregate/customer"
 )
 
 type CustomerFactory struct {
@@ -17,10 +16,6 @@ func NewCustomer(objCustomer CustomerFactory) (*entities.Customer, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	customerEvent := event.CustomerCreatedEvent{}
-	event.NewCustumerCreatedEvent(customer)
-	customerEvent.SendEmailWhenCustomerIsCreatedDispatch()
 
 	return customer, nil
 }
