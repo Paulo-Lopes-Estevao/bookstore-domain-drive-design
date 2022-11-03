@@ -12,7 +12,7 @@ type Customer struct {
 	products []*item.Item
 }
 
-func NewCustomer(name string, phone string, email string, password string) (*Customer, error) {
+func NewCustomerAggregate(name string, phone string, email string, password string) (*Customer, error) {
 	person := &person.Person{
 		Name:     name,
 		Phone:    phone,
