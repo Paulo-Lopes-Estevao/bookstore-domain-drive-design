@@ -1,4 +1,4 @@
-package entities
+package customer
 
 import (
 	"bookstore/domain/aggregate/customer/event"
