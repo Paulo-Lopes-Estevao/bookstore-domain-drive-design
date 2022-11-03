@@ -1,10 +1,9 @@
 package entities
 
 import (
+	"bookstore/domain/aggregate/customer/event"
 	"bookstore/domain/entities/item"
 	"bookstore/domain/entities/person"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
 type Customer struct {
@@ -13,46 +12,20 @@ type Customer struct {
 }
 
 func NewCustomerAggregate(name string, phone string, email string, password string) (*Customer, error) {
-	person := &person.Person{
-		Name:     name,
-		Phone:    phone,
-		Email:    email,
-		Password: password,
+
+	person, err := person.NewPerson(name, phone, email, password)
+	if err != nil {
+		return nil, err
 	}
+
 	customer := &Customer{
 		person:   person,
 		products: make([]*item.Item, 0),
 	}
-	err := customer.passwordEncrypt()
-	if err != nil {
-		return nil, err
-	}
+
+	customerEvent := event.CustomerCreatedEvent{}
+	event.NewCustumerCreatedEvent(email)
+	customerEvent.DispatchSendEmailWhenCustomerIsCreatedToConfirmAccount()
+
 	return customer, nil
-}
-
-func (customer *Customer) passwordEncrypt() error {
-	password, err := bcrypt.GenerateFromPassword([]byte(customer.person.Password), bcrypt.DefaultCost)
-
-	if err != nil {
-		return err
-	}
-
-	customer.person.Password = string(password)
-
-	err = customer.IsValid()
-	if err != nil {
-		return err
-	}
-
-	return nil
-
-}
-
-func (customer *Customer) VerifyIsExistEmail() bool {
-	return customer.person.VerifyEmail == true
-}
-
-func (customer *Customer) VerifyPassword(password string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(customer.person.Password), []byte(password))
-	return err == nil
 }
