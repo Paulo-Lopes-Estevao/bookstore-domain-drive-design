@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	event.Register("Send Email When Customer Is Created Handler", handler.SendEmailWhenCustomerIsCreatedHandler())
+	event.Register("Send email when customer is created to confirm account", handler.SendEmailWhenCustomerIsCreatedToConfirmAccount())
 }
 
 type CustomerCreatedEvent struct {
@@ -20,8 +20,8 @@ func NewCustumerCreatedEvent(EventData any) {
 	custumerEvent.EventData = EventData
 }
 
-func (customerCreatedEvent *CustomerCreatedEvent) SendEmailWhenCustomerIsCreatedDispatch() {
+func (customerCreatedEvent *CustomerCreatedEvent) DispatchSendEmailWhenCustomerIsCreatedToConfirmAccount() {
 	typeData := new(event.EventType)
 	typeData.EventData = customerCreatedEvent.EventData
-	event.Dispatch("Send Email When Customer Is Created Handler", typeData)
+	event.Dispatch("Send email when customer is created to confirm account", typeData)
 }
