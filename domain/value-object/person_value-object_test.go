@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewPersonValueObject(t *testing.T) {
-	person, err := valueobject.NewPersonValueObject("John", "Doe@gmail.com", "999625342", "1234")
+	person, err := valueobject.NewPersonValueObject("John", "999625342", "Doe@gmail.com", "1234")
 
 	assert.Nil(t, err, err)
 

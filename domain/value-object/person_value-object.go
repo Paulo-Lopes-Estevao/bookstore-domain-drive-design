@@ -13,7 +13,7 @@ type PersonValueObject struct {
 	Password string `valid:"required,minstringlength(4)"`
 }
 
-func NewPersonValueObject(name, email, phone, password string) (*PersonValueObject, error) {
+func NewPersonValueObject(name, phone, email, password string) (*PersonValueObject, error) {
 	p := PersonValueObject{
 		Name:     name,
 		Phone:    phone,
