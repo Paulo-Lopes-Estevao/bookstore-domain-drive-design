@@ -1,9 +1,9 @@
-package customer
+package aggregate
 
 import (
-	"bookstore/domain/aggregate/customer/event"
 	"bookstore/domain/entities/item"
 	"bookstore/domain/entities/person"
+	"bookstore/domain/entities/person/event"
 )
 
 type Customer struct {
