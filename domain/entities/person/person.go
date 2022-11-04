@@ -26,11 +26,6 @@ func NewPerson(name string, phone string, email string, password string) (*Perso
 		return nil, err
 	}
 
-	err = person.IsValid()
-	if err != nil {
-		return nil, err
-	}
-
 	return person, nil
 }
 
