@@ -1,8 +1,6 @@
 package factory
 
-import (
-	entities "bookstore/domain/aggregate/customer"
-)
+import "bookstore/domain/aggregate"
 
 type CustomerFactory struct {
 	Name     string
@@ -11,8 +9,8 @@ type CustomerFactory struct {
 	Password string
 }
 
-func NewCustomer(objCustomer CustomerFactory) (*entities.Customer, error) {
-	customer, err := entities.NewCustomerAggregate(objCustomer.Name, objCustomer.Phone, objCustomer.Email, objCustomer.Password)
+func NewCustomer(objCustomer CustomerFactory) (*aggregate.Customer, error) {
+	customer, err := aggregate.NewCustomer(objCustomer.Name, objCustomer.Phone, objCustomer.Email, objCustomer.Password)
 	if err != nil {
 		return nil, err
 	}

@@ -11,7 +11,7 @@ type Customer struct {
 	products []*item.Item
 }
 
-func NewCustomerAggregate(name string, phone string, email string, password string) (*Customer, error) {
+func NewCustomer(name string, phone string, email string, password string) (*Customer, error) {
 
 	person, err := person.NewPerson(name, phone, email, password)
 	if err != nil {
