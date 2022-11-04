@@ -4,6 +4,7 @@ import (
 	"bookstore/domain/entities/item"
 	"bookstore/domain/entities/person"
 	"bookstore/domain/entities/person/event"
+	valueobject "bookstore/domain/value-object"
 )
 
 type Customer struct {
@@ -13,7 +14,12 @@ type Customer struct {
 
 func NewCustomer(name string, phone string, email string, password string) (*Customer, error) {
 
-	person, err := person.NewPerson(name, phone, email, password)
+	personValueObject, err := valueobject.NewPersonValueObject(name, phone, email, password)
+	if err != nil {
+		return nil, err
+	}
+
+	person, err := person.NewPerson(personValueObject.Name, personValueObject.Phone, personValueObject.Email, personValueObject.Password)
 	if err != nil {
 		return nil, err
 	}
