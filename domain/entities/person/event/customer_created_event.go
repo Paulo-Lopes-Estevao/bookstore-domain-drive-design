@@ -11,7 +11,7 @@ func init() {
 }
 
 type CustomerCreatedEvent struct {
-	*event.EventType
+	event.EventType
 }
 
 func NewCustumerCreatedEvent(EventData any) {
