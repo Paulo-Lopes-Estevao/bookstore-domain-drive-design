@@ -1,7 +1,7 @@
 package event
 
 import (
-	"bookstore/domain/aggregate/customer/event/handler"
+	"bookstore/domain/entities/person/event/handler"
 	"bookstore/domain/event"
 	"time"
 )
