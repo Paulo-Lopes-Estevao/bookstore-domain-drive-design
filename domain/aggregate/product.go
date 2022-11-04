@@ -2,6 +2,7 @@ package aggregate
 
 import (
 	"bookstore/domain/entities/item"
+	valueobject "bookstore/domain/value-object"
 	"errors"
 
 	"github.com/google/uuid"
@@ -18,18 +19,20 @@ var (
 )
 
 func NewProduct(name, description string, price float64, quantity int) (*Product, error) {
-	if name == "" || description == "" {
-		return nil, ErrMissingValues
+
+	itemValueObject, err := valueobject.NewItemValueObject(name, description, price, quantity)
+	if err != nil {
+		return nil, err
 	}
 
 	products := &Product{
 		item: &item.Item{
 			ID:          uuid.New(),
-			Name:        name,
-			Description: description,
+			Name:        itemValueObject.Name,
+			Description: itemValueObject.Description,
 		},
-		price:    price,
-		quantity: quantity,
+		price:    itemValueObject.Price,
+		quantity: itemValueObject.Quantity,
 	}
 
 	return products, nil
