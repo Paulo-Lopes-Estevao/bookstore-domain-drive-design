@@ -4,9 +4,9 @@ import "github.com/asaskevich/govalidator"
 
 type ItemValueObject struct {
 	Name        string  `valid:"required"`
-	Price       float64 `valid:"required"`
-	Quantity    int     `valid:"required"`
-	Description string  `valid:"-"`
+	Price       float64 `valid:"required,float"`
+	Quantity    int     `valid:"required,int,minstringlength(1)"`
+	Description string  `valid:"required,minstringlength(1)"`
 }
 
 func NewItemValueObject(name, description string, price float64, quantity int) (*ItemValueObject, error) {

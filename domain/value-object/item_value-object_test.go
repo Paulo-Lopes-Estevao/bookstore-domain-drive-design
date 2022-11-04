@@ -9,7 +9,7 @@ import (
 )
 
 func TestNewItemValueObject(t *testing.T) {
-	item, err := valueobject.NewItemValueObject(faker.Name(), faker.Word(), 50.000, 10)
+	item, err := valueobject.NewItemValueObject(faker.Name(), faker.Word(), 10, 1)
 	assert.Nil(t, err, err)
 	assert.NotNil(t, item)
 }
