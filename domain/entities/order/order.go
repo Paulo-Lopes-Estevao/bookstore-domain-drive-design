@@ -12,7 +12,7 @@ type Order struct {
 	Item       []*OrderItem
 }
 
-func NewOrder(id string, customerId string, items ...*OrderItem) (*Order, error) {
+func NewOrder(customerId string, items ...*OrderItem) (*Order, error) {
 	order := &Order{
 		ID:         uuid.New(),
 		CostumerID: customerId,
