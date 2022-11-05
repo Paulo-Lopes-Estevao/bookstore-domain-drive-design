@@ -1,36 +1,27 @@
 package aggregate
 
 import (
-	"bookstore/domain/entities/order"
 	"bookstore/domain/entities/person"
 	"bookstore/domain/entities/person/event"
-	valueobject "bookstore/domain/value-object"
 
 	"github.com/google/uuid"
 )
 
 type Customer struct {
-	ID       uuid.UUID
-	person   *person.Person
-	products []*order.OrderItem
+	ID     uuid.UUID
+	person *person.Person
 }
 
 func NewCustomer(name string, phone string, email string, password string) (*Customer, error) {
 
-	personValueObject, err := valueobject.NewPersonValueObject(name, phone, email, password)
-	if err != nil {
-		return nil, err
-	}
-
-	person, err := person.NewPerson(personValueObject.Name, personValueObject.Phone, personValueObject.Email, personValueObject.Password)
+	person, err := person.NewPerson(name, phone, email, password)
 	if err != nil {
 		return nil, err
 	}
 
 	customer := &Customer{
-		ID:       uuid.New(),
-		person:   person,
-		products: make([]*order.OrderItem, 0),
+		ID:     uuid.New(),
+		person: person,
 	}
 
 	customerEvent := event.CustomerCreatedEvent{}
