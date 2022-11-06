@@ -2,12 +2,9 @@ package repository
 
 import (
 	"bookstore/domain/aggregate"
-
-	"github.com/google/uuid"
+	"bookstore/domain/generics/repository"
 )
 
-type CustomerRepository interface {
-	Get(uuid.UUID) (aggregate.Customer, error)
-	Add(aggregate.Customer) error
-	Update(aggregate.Customer) error
+type ICustomerRepository interface {
+	repository.Repository[aggregate.Customer]
 }
