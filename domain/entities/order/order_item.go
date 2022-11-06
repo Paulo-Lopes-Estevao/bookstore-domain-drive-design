@@ -14,14 +14,18 @@ type OrderItem struct {
 	Quantity    int
 }
 
-func NewOrderItem(name, description string, price float64, quantity int) *OrderItem {
-	return &OrderItem{
+func NewOrderItem(name, description string, price float64, quantity int) (*OrderItem, error) {
+	orderItem := &OrderItem{
 		ID:          uuid.New(),
 		Name:        name,
 		Description: description,
 		Price:       price,
 		Quantity:    quantity,
 	}
+	if err := orderItem.Validate(); err != nil {
+		return nil, err
+	}
+	return orderItem, nil
 }
 
 func (orderItem *OrderItem) orderItemTotal() int {
