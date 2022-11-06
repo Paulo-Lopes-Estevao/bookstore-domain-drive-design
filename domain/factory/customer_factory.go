@@ -9,8 +9,8 @@ type CustomerFactory struct {
 	Password string
 }
 
-func NewCustomer(objCustomer CustomerFactory) (*aggregate.Customer, error) {
-	customer, err := aggregate.NewCustomer(objCustomer.Name, objCustomer.Phone, objCustomer.Email, objCustomer.Password)
+func NewCustomer(Customer CustomerFactory) (*aggregate.Customer, error) {
+	customer, err := aggregate.NewCustomer(Customer.Name, Customer.Phone, Customer.Email, Customer.Password)
 	if err != nil {
 		return nil, err
 	}
