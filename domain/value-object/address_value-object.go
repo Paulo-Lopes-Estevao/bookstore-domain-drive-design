@@ -1,6 +1,8 @@
 package valueobject
 
-import "github.com/asaskevich/govalidator"
+import (
+	"errors"
+)
 
 type Address struct {
 	Province string
@@ -26,9 +28,8 @@ func NewAddress(province string, county string, street string, number int, count
 }
 
 func (address *Address) IsValid() error {
-	_, err := govalidator.ValidateStruct(address)
-	if err != nil {
-		return err
+	if address.Province == "" || address.County == "" || address.Street == "" || address.Number == 0 {
+		return errors.New("Address is not valid")
 	}
 	return nil
 }
