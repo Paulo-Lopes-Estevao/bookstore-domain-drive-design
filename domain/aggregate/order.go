@@ -49,7 +49,7 @@ func (o Order) GetOrderItem() []*order.OrderItem {
 
 func (orderItem *Order) AddOrderItem() error {
 	for _, v := range orderItem.OrderItem {
-		_, err := order.NewOrderItem(v.Name, v.Description, v.Price, v.Quantity)
+		_, err := order.NewOrderItem(v.Name, v.Description, v.ProductID, v.Price, v.Quantity)
 		if err != nil {
 			return err
 		}

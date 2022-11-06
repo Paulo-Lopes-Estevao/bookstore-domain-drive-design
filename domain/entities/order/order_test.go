@@ -22,8 +22,8 @@ func TestOderwhenOrderItemsIsEmpty(t *testing.T) {
 }
 
 func TestOderwhenOrderCalculateTotal(t *testing.T) {
-	orderItem, _ := order.NewOrderItem("Harry Potter", "History", 400, 2)
-	orderItem2, _ := order.NewOrderItem("Harry Potter", "History", 300, 2)
+	orderItem, _ := order.NewOrderItem("Harry Potter", "History", "09", 400, 2)
+	orderItem2, _ := order.NewOrderItem("Harry Potter", "History", "09", 300, 2)
 
 	order2, err := order.NewOrder("123", orderItem, orderItem2)
 	assert.Nil(t, err)
@@ -33,7 +33,7 @@ func TestOderwhenOrderCalculateTotal(t *testing.T) {
 }
 
 func TestOderwhenOrderItemQtyIsLessOrEqualZero0(t *testing.T) {
-	orderItem, _ := order.NewOrderItem("Harry Potter", "History", 400, 0)
+	orderItem, _ := order.NewOrderItem("Harry Potter", "History", "09", 400, 0)
 
 	_, err := order.NewOrder("123", orderItem)
 
