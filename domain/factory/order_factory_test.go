@@ -14,6 +14,7 @@ import (
 func TestCreateOrder(t *testing.T) {
 	item := &order.OrderItem{
 		ID:          uuid.New(),
+		ProductID:   "123",
 		Name:        "Harry Potter",
 		Description: "History",
 		Price:       100,
@@ -21,6 +22,7 @@ func TestCreateOrder(t *testing.T) {
 	}
 	item2 := &order.OrderItem{
 		ID:          uuid.New(),
+		ProductID:   "123",
 		Name:        "Harry Potter",
 		Description: "History",
 		Price:       200,
@@ -41,13 +43,15 @@ func TestCreateOrder(t *testing.T) {
 	order := factory.OrderFactory{
 		Order: aggregate.Order{
 			CustomerID: "123",
-			OrderItem:  value,
-			Address:    address,
+			Order: order.Order{
+				Item: value,
+			},
+			Address: address,
 		},
 	}
 	newOder, err := factory.CreateOrder(order)
 
 	assert.Nil(t, err)
 
-	assert.Equal(t, newOder.Order.OrderItem, value)
+	assert.Equal(t, newOder.Order.Order.Item, value)
 }
