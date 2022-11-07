@@ -9,7 +9,7 @@ import (
 
 type Customer struct {
 	ID     uuid.UUID
-	person *person.Person
+	person.Person
 }
 
 func NewCustomer(name string, phone string, email string, password string) (*Customer, error) {
@@ -21,7 +21,7 @@ func NewCustomer(name string, phone string, email string, password string) (*Cus
 
 	customer := &Customer{
 		ID:     uuid.New(),
-		person: person,
+		Person: *person,
 	}
 
 	customerEvent := event.CustomerCreatedEvent{}
