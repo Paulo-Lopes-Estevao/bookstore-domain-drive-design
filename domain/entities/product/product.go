@@ -7,16 +7,18 @@ import (
 )
 
 type Product struct {
-	ID    uuid.UUID
-	Name  string
-	Price float64
+	ID         uuid.UUID
+	CategoryID string
+	Name       string
+	Price      float64
 }
 
-func NewProduct(name string, price float64) (*Product, error) {
+func NewProduct(categoryID, name string, price float64) (*Product, error) {
 	product := &Product{
-		ID:    uuid.New(),
-		Name:  name,
-		Price: price,
+		ID:         uuid.New(),
+		CategoryID: categoryID,
+		Name:       name,
+		Price:      price,
 	}
 
 	if err := product.Validate(); err != nil {
