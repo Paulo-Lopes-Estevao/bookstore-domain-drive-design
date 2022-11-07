@@ -8,6 +8,10 @@ type Product struct {
 	Price      float64
 }
 
+type Category struct {
+	Name       string
+}
+
 func NewProduct(categoryID, name string, price float64) (*Product, error) {
 	product := &Product{
 		CategoryID: categoryID,
@@ -21,8 +25,11 @@ func NewProduct(categoryID, name string, price float64) (*Product, error) {
 }
 
 func (p *Product) Validate() error {
-	if p.CategoryID == "" || p.Name == "" {
-		return fmt.Errorf("categoryID and name are required")
+	if p.CategoryID == "" {
+        return fmt.Errorf("categoryID is empty")
+    }
+	if p.Name == "" {
+		return fmt.Errorf("name is required")
 	}
 	if p.Price == 0 {
 		return fmt.Errorf("price is required")
