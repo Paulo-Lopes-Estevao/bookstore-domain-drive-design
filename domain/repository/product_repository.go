@@ -1,10 +1,11 @@
 package repository
 
 import (
-	"bookstore/domain/entities/product"
+	"bookstore/domain/aggregate"
 	"bookstore/domain/generics/repository"
 )
 
 type IProductRepository interface {
-	repository.Repository[product.Product]
+	repository.Repository[aggregate.Product]
+	CreateCategory(name string) error
 }
