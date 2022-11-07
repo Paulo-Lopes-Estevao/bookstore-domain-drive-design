@@ -31,9 +31,9 @@ func (r *OrderRepository) Find(id string) (*aggregate.Order, error) {
 	return &entity, nil
 }
 
-func (r *OrderRepository) FindAll(filter *aggregate.Order) ([]aggregate.Order, error) {
+func (r *OrderRepository) FindAll() ([]aggregate.Order, error) {
 	var entities []aggregate.Order
-	if err := r.db.Where(filter).Find(&entities).Error; err != nil {
+	if err := r.db.Find(&entities).Error; err != nil {
 		return nil, err
 	}
 	return entities, nil

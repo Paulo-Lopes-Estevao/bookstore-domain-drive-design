@@ -30,9 +30,9 @@ func (r *CustomerRepository) Find(id string) (*aggregate.Customer, error) {
 	return &customer, nil
 }
 
-func (r *CustomerRepository) FindAll(filter *aggregate.Customer) ([]aggregate.Customer, error) {
+func (r *CustomerRepository) FindAll() ([]aggregate.Customer, error) {
 	var customers []aggregate.Customer
-	if err := r.db.Where(filter).Find(&customers).Error; err != nil {
+	if err := r.db.Find(&customers).Error; err != nil {
 		return nil, err
 	}
 	return customers, nil
