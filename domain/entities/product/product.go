@@ -2,6 +2,7 @@ package product
 
 import (
 	"errors"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -11,6 +12,8 @@ type Product struct {
 	CategoryID string
 	Name       string
 	Price      float64
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
 }
 
 func NewProduct(categoryID, name string, price float64) (*Product, error) {
@@ -20,7 +23,7 @@ func NewProduct(categoryID, name string, price float64) (*Product, error) {
 		Name:       name,
 		Price:      price,
 	}
-
+	product.CreatedAt = time.Now()
 	if err := product.Validate(); err != nil {
 		return nil, err
 

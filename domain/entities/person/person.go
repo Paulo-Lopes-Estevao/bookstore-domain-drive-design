@@ -1,6 +1,8 @@
 package person
 
 import (
+	"time"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -11,6 +13,8 @@ type Person struct {
 	Password         string `valid:"required"`
 	VerifyEmail      bool   `valid:"-"`
 	VerificationCode string `valid:"-"`
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
 }
 
 func NewPerson(name string, phone string, email string, password string) (*Person, error) {
@@ -20,7 +24,7 @@ func NewPerson(name string, phone string, email string, password string) (*Perso
 		Email:    email,
 		Password: password,
 	}
-
+	person.CreatedAt = time.Now()
 	err := person.passwordEncrypt()
 	if err != nil {
 		return nil, err

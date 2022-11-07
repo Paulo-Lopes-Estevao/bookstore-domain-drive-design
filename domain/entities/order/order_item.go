@@ -2,6 +2,7 @@ package order
 
 import (
 	"errors"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -13,6 +14,8 @@ type OrderItem struct {
 	Description string
 	Price       float64
 	Quantity    int
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 func NewOrderItem(name, description, productId string, price float64, quantity int) (*OrderItem, error) {
@@ -24,6 +27,7 @@ func NewOrderItem(name, description, productId string, price float64, quantity i
 		Price:       price,
 		Quantity:    quantity,
 	}
+	orderItem.CreatedAt = time.Now()
 	if err := orderItem.Validate(); err != nil {
 		return nil, err
 	}

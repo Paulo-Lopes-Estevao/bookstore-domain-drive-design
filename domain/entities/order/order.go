@@ -2,6 +2,7 @@ package order
 
 import (
 	"errors"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -10,6 +11,8 @@ type Order struct {
 	ID         uuid.UUID
 	CostumerID string
 	Item       []*OrderItem
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
 }
 
 func NewOrder(customerId string, items ...*OrderItem) (*Order, error) {
@@ -18,6 +21,7 @@ func NewOrder(customerId string, items ...*OrderItem) (*Order, error) {
 		CostumerID: customerId,
 		Item:       items,
 	}
+	order.CreatedAt = time.Now()
 	if err := order.Validate(); err != nil {
 		return nil, err
 	}
