@@ -3,10 +3,11 @@ package entities
 import "github.com/google/uuid"
 
 type Order struct {
-	Base
+	ID         uuid.UUID `gorm:"type:uuid;primary_key"`
 	CustomerID string
 	OrderItem  []OrderItem
 	Address
+	Base
 }
 
 type OrderItem struct {

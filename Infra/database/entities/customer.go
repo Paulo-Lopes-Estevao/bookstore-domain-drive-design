@@ -1,8 +1,11 @@
 package entities
 
+import "github.com/google/uuid"
+
 type Customer struct {
-	Base
+	ID uuid.UUID `gorm:"type:uuid;primary_key"`
 	Person
+	Base
 }
 
 type Person struct {
