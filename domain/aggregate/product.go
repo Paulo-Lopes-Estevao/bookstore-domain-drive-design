@@ -1,19 +1,33 @@
 package aggregate
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+)
 
 type Product struct {
+	ID         uuid.UUID
 	CategoryID string
 	Name       string
 	Price      float64
 }
 
 type Category struct {
+	ID   uuid.UUID
 	Name string
+}
+
+func NewCategory(name string) *Category {
+	return &Category{
+		ID:   uuid.New(),
+		Name: name,
+	}
 }
 
 func NewProduct(categoryID, name string, price float64) (*Product, error) {
 	product := &Product{
+		ID:         uuid.New(),
 		CategoryID: categoryID,
 		Name:       name,
 		Price:      price,
