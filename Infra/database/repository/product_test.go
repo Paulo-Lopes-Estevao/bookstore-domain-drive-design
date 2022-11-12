@@ -5,6 +5,7 @@ import (
 	"bookstore/Infra/database/postgresql"
 	"bookstore/Infra/database/repository"
 	"bookstore/domain/aggregate"
+	"bookstore/domain/factory"
 	"log"
 	"path/filepath"
 	"runtime"
@@ -34,14 +35,20 @@ func TestCreateCategory(t *testing.T) {
 	defer db.Close()
 
 	productRepo := repository.NewProductRepository(db)
-	product := aggregate.Product{}
-	product.Name = "Harry Potter"
-	product.Price = 400
 
-	errCategory := productRepo.CreateCategory("Crônica")
+	category := aggregate.NewCategory("Crônica")
+	errCategory := productRepo.CreateCategory(category.Name)
 	assert.Nil(t, errCategory)
 
-	errProduct := productRepo.Create(&product)
+	product := aggregate.Product{}
+	product.Name = "Harry Potter"
+	product.Price = 5400
+	product.CategoryID = category.ID.String()
+
+	produFactory, errProd := factory.CreatedProduct(product.CategoryID, product.Name, product.Price)
+	assert.Nil(t, errProd)
+
+	errProduct := productRepo.Create(produFactory)
 	if errProduct != nil {
 		t.Errorf("Failed to repository create product: %v", errProduct)
 	}
