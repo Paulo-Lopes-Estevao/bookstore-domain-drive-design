@@ -2,13 +2,12 @@ package aggregate
 
 import (
 	"bookstore/domain/entities/person"
-	"bookstore/domain/entities/person/event"
 
 	"github.com/google/uuid"
 )
 
 type Customer struct {
-	ID     uuid.UUID
+	ID uuid.UUID
 	person.Person
 }
 
@@ -23,10 +22,6 @@ func NewCustomer(name string, phone string, email string, password string) (*Cus
 		ID:     uuid.New(),
 		Person: *person,
 	}
-
-	customerEvent := event.CustomerCreatedEvent{}
-	event.NewCustumerCreatedEvent(email)
-	customerEvent.DispatchSendEmailWhenCustomerIsCreatedToConfirmAccount()
 
 	return customer, nil
 }
