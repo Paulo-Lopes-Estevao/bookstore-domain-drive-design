@@ -16,9 +16,9 @@ type Product struct {
 	UpdatedAt  time.Time
 }
 
-func NewProduct(categoryID, name string, price float64) (*Product, error) {
+func NewProduct(id uuid.UUID, categoryID, name string, price float64) (*Product, error) {
 	product := &Product{
-		ID:         uuid.New(),
+		ID:         id,
 		CategoryID: categoryID,
 		Name:       name,
 		Price:      price,
