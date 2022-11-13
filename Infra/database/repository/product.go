@@ -3,6 +3,7 @@ package repository
 import (
 	"bookstore/domain/aggregate"
 
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 )
 
@@ -43,5 +44,5 @@ func (r *ProductRepository) FindAll() ([]aggregate.Product, error) {
 }
 
 func (r *ProductRepository) CreateCategory(name string) error {
-	return r.db.Model(&aggregate.Category{}).Create(&aggregate.Category{Name: name}).Error
+	return r.db.Model(&aggregate.Category{}).Create(&aggregate.Category{ID: uuid.New(), Name: name}).Error
 }
