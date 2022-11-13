@@ -36,7 +36,9 @@ func TestCreateCategory(t *testing.T) {
 
 	productRepo := repository.NewProductRepository(db)
 
-	category := aggregate.NewCategory("Crônica")
+	category, categoryErr := aggregate.NewCategory("Crônica")
+	assert.Nil(t, categoryErr)
+
 	errCategory := productRepo.CreateCategory(category.Name)
 	assert.Nil(t, errCategory)
 
