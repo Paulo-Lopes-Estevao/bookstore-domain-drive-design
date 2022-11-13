@@ -1,7 +1,7 @@
 package aggregate
 
 import (
-	"fmt"
+	"bookstore/domain/entities/product"
 
 	"github.com/google/uuid"
 )
@@ -18,35 +18,27 @@ type Category struct {
 	Name string
 }
 
-func NewCategory(name string) *Category {
-	return &Category{
-		ID:   uuid.New(),
-		Name: name,
+func NewCategory(name string) (*Category, error) {
+	category, err := product.NewCategory(name)
+	if err != nil {
+		return nil, err
 	}
+	return &Category{
+		ID:   category.ID,
+		Name: category.Name,
+	}, nil
 }
 
 func NewProduct(categoryID, name string, price float64) (*Product, error) {
-	product := &Product{
-		ID:         uuid.New(),
-		CategoryID: categoryID,
-		Name:       name,
-		Price:      price,
-	}
-	if err := product.Validate(); err != nil {
+	product, err := product.NewProduct(uuid.New(), categoryID, name, price)
+	if err != nil {
 		return nil, err
 	}
-	return product, nil
-}
-
-func (p *Product) Validate() error {
-	if p.CategoryID == "" {
-		return fmt.Errorf("categoryID is empty")
+	aggreProduct := &Product{
+		ID:         product.ID,
+		CategoryID: product.CategoryID,
+		Name:       product.Name,
+		Price:      product.Price,
 	}
-	if p.Name == "" {
-		return fmt.Errorf("name is required")
-	}
-	if p.Price == 0 {
-		return fmt.Errorf("price is required")
-	}
-	return nil
+	return aggreProduct, nil
 }
