@@ -8,7 +8,15 @@ import (
 type Order struct {
 	CustomerID string
 	Address    *valueobject.Address
-	Order      order.Order
+	Item       []*OrderItem
+}
+
+type OrderItem struct {
+	ProductID   string
+	Name        string
+	Description string
+	Price       float64
+	Quantity    int
 }
 
 func NewOrder(orderAggregate Order) (*Order, error) {
@@ -23,7 +31,7 @@ func NewOrder(orderAggregate Order) (*Order, error) {
 		return nil, err
 	}
 
-	order, err := order.NewOrder(orderAggregate.CustomerID, orderAggregate.Order.Item...)
+	order, err := order.NewOrder(orderAggregate.CustomerID, OrderItem...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,14 +55,14 @@ func (o Order) GetOrderItem() []*order.OrderItem {
 	return o.Order.Item
 }
 
-func (orderItem *Order) AddOrderItem() error {
-	for _, v := range orderItem.Order.Item {
-		_, err := order.NewOrderItem(v.Name, v.Description, v.ProductID, v.Price, v.Quantity)
+func (orderItem *Order) AddOrderItem() (*order.OrderItem, error) {
+	for _, v := range orderItem.Item {
+		item, err := order.NewOrderItem(v.Name, v.Description, v.ProductID, v.Price, v.Quantity)
 		if err != nil {
-			return err
+			return nil, err
 		}
+		
 	}
-	return nil
 }
 
 func (orderAddress *Order) AddAddress() error {
