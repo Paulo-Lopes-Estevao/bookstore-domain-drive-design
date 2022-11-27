@@ -28,6 +28,14 @@ Integrated SonarCloud in CI/CD pipeline is being used to review automated clean 
     Required
         - Golang
 
+## DDD Domain Drive Design
+
+### ***Strategic Design***
+
+![Ubiquitous Language](docs/ddd/img/ddd-Ubiquitous%20Language.drawio.png)
+![Bounded Context](docs/ddd/img/ddd-Bounded%20Context.drawio.png)
+![Context Map](docs/ddd/img/ddd-Context%20Map.drawio.png)
+
 ## Contributing
 
 For major changes, open a problem first to discuss what you would like to change.
