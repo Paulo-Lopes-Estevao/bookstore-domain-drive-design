@@ -2,9 +2,7 @@ package factory_test
 
 import (
 	"bookstore/domain/aggregate"
-	"bookstore/domain/entities/order"
 	"bookstore/domain/factory"
-	valueobject "bookstore/domain/value-object"
 	"testing"
 
 	"github.com/google/uuid"
@@ -12,46 +10,34 @@ import (
 )
 
 func TestCreateOrder(t *testing.T) {
-	item := &order.OrderItem{
-		ID:          uuid.New(),
-		ProductID:   "123",
-		Name:        "Harry Potter",
-		Description: "History",
-		Price:       100,
-		Quantity:    2,
-	}
-	item2 := &order.OrderItem{
-		ID:          uuid.New(),
-		ProductID:   "123",
-		Name:        "Harry Potter",
-		Description: "History",
-		Price:       200,
-		Quantity:    2,
-	}
-	value := []*order.OrderItem{
-		item, item2,
-	}
 
-	address := &valueobject.Address{
-		Province: "Luanda",
-		County:   "Luanda",
-		Street:   "Morro Bento ||",
-		Number:   123,
-		Country:  "Angola",
-	}
+	orderAggregate := aggregate.OrderAggregate{}
+	orderItemAggregate := &aggregate.OrderItemAggregate{}
 
-	order := factory.OrderFactory{
-		Order: aggregate.Order{
-			CustomerID: "123",
-			Order: order.Order{
-				Item: value,
-			},
-			Address: address,
-		},
-	}
-	newOder, err := factory.CreateOrder(order)
+	orderAggregate.CostumerID = "123"
+
+	orderAggregate.Address.Province = "Luanda"
+	orderAggregate.Address.County = "Luanda"
+	orderAggregate.Address.Street = "Morro Bento ||"
+	orderAggregate.Address.Number = 1234
+	orderAggregate.Address.Country = "Angola"
+
+	orderItemAggregate.Name = "Harry Potter"
+	orderItemAggregate.Description = "Description"
+	orderItemAggregate.Quantity = 1
+	orderItemAggregate.Price = 7000
+	orderItemAggregate.ProductID = uuid.New().String()
+
+	factoryOrder := factory.NewAggregateFactory(orderAggregate)
+
+	addOrderItem, err := factoryOrder.CreateOrderItem(orderItemAggregate)
+	assert.Nil(t, err)
+
+	orderAggregate.Item = addOrderItem
+
+	newOder, err := factoryOrder.CreateOrder(&orderAggregate)
 
 	assert.Nil(t, err)
 
-	assert.Equal(t, newOder.Order.Order.Item, value)
+	assert.Equal(t, newOder.CostumerID, "123")
 }
