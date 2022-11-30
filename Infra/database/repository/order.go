@@ -15,24 +15,24 @@ func NewOrderRepository(db *gorm.DB) *OrderRepository {
 	return &OrderRepository{db: db}
 }
 
-func (r *OrderRepository) Create(entity *aggregate.Order) error {
-	return r.db.Create(entity.Order).Error
+func (r *OrderRepository) Create(entity *aggregate.OrderAggregate) error {
+	return r.db.Create(entity).Error
 }
 
-func (r *OrderRepository) Update(entity *aggregate.Order) error {
-	return r.db.Model(entity).Update(entity.Order).Error
+func (r *OrderRepository) Update(entity *aggregate.OrderAggregate) error {
+	return r.db.Model(entity).Update(entity).Error
 }
 
-func (r *OrderRepository) Find(id string) (*aggregate.Order, error) {
-	var entity aggregate.Order
-	if err := r.db.Where("id =?", id).Find(&entity.Order).Error; err != nil {
+func (r *OrderRepository) Find(id string) (*aggregate.OrderAggregate, error) {
+	var entity aggregate.OrderAggregate
+	if err := r.db.Where("id =?", id).Find(&entity).Error; err != nil {
 		return nil, err
 	}
 	return &entity, nil
 }
 
-func (r *OrderRepository) FindAll() ([]aggregate.Order, error) {
-	var entities []aggregate.Order
+func (r *OrderRepository) FindAll() ([]aggregate.OrderAggregate, error) {
+	var entities []aggregate.OrderAggregate
 	if err := r.db.Find(&entities).Error; err != nil {
 		return nil, err
 	}
@@ -40,8 +40,8 @@ func (r *OrderRepository) FindAll() ([]aggregate.Order, error) {
 }
 
 func (r *OrderRepository) Delete(id string) error {
-	var entities aggregate.Order
-	return r.db.Where("id =?", id).Delete(entities.Order).Error
+	var entities aggregate.OrderAggregate
+	return r.db.Where("id =?", id).Delete(entities).Error
 }
 
 func (r *OrderRepository) CreateOrderItem(productID, name, description, productId string, price float64, quantity int) error {
