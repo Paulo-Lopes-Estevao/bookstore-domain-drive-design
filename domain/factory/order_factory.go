@@ -22,9 +22,10 @@ type (
 )
 
 // NewAggregateFactory is the factory constructor for Aggregate
-func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate) AggregateFactory {
+func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate, aggregateOrderItem aggregate.OrderItemAggregate) AggregateFactory {
 	return &AggregateFactoryImpl{
-		aggregateOrder: aggregateOrder,
+		aggregateOrder:     aggregateOrder,
+		aggregateOrderItem: aggregateOrderItem,
 	}
 
 }
