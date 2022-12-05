@@ -24,7 +24,7 @@ func TestCustomerOrder(t *testing.T) {
 	orderItemAggregate.Description = "Description"
 	orderItemAggregate.Quantity = 1
 	orderItemAggregate.Price = 7000
-	orderItemAggregate.ProductID = uuid.New().String()
+	orderItemAggregate.ProductID = uuid.New()
 
 	orderItem, err := aggregate.NewOrderItem(orderItemAggregate)
 	assert.Nil(t, err)

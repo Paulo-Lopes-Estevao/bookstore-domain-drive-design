@@ -26,7 +26,7 @@ func TestCreateOrder(t *testing.T) {
 	orderItemAggregate.Description = "Description"
 	orderItemAggregate.Quantity = 1
 	orderItemAggregate.Price = 7000
-	orderItemAggregate.ProductID = uuid.New().String()
+	orderItemAggregate.ProductID = uuid.New()
 
 	factoryOrder := factory.NewAggregateFactory(orderAggregate, orderItemAggregate)
 
