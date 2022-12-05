@@ -9,7 +9,7 @@ import (
 
 type OrderItem struct {
 	ID          uuid.UUID
-	ProductID   string
+	ProductID   uuid.UUID
 	Name        string
 	Description string
 	Price       float64
@@ -18,7 +18,7 @@ type OrderItem struct {
 	UpdatedAt   time.Time
 }
 
-func NewOrderItem(name, description, productId string, price float64, quantity int) (*OrderItem, error) {
+func NewOrderItem(name, description string, productId uuid.UUID, price float64, quantity int) (*OrderItem, error) {
 	orderItem := &OrderItem{
 		ID:          uuid.New(),
 		ProductID:   productId,
@@ -42,7 +42,7 @@ func (orderItem *OrderItem) Validate() error {
 	if orderItem.ID == uuid.Nil {
 		return errors.New("OrderItem ID cannot be empty")
 	}
-	if orderItem.ProductID == "" {
+	if orderItem.ProductID == uuid.Nil {
 		return errors.New("Product ID cannot be empty")
 	}
 	if orderItem.Name == "" {

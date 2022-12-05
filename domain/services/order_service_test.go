@@ -5,11 +5,12 @@ import (
 	"bookstore/domain/services"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestTotalOrderPrice(t *testing.T) {
-	orderItem, _ := order.NewOrderItem("Harry Potter", "History", "09", 400, 3)
+	orderItem, _ := order.NewOrderItem("Harry Potter", "History", uuid.New(), 400, 3)
 
 	order, err := order.NewOrder("123", orderItem)
 	assert.NoError(t, err)

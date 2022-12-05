@@ -5,9 +5,7 @@ import (
 	"bookstore/Infra/database/postgresql"
 	"bookstore/Infra/database/repository"
 	"bookstore/domain/aggregate"
-	"bookstore/domain/entities/order"
 	"bookstore/domain/factory"
-	valueobject "bookstore/domain/value-object"
 	"testing"
 
 	"github.com/google/uuid"
@@ -16,6 +14,37 @@ import (
 
 func init() {
 	Env()
+}
+
+func TestAddOrderItem(t *testing.T) {
+	dsn := postgresql.PostgreSQLConnect()
+	db, err := database.DB("postgres", dsn)
+	assert.Nil(t, err)
+
+	defer db.Close()
+
+	orderRepo := repository.NewOrderRepository(db)
+
+	productRepo := repository.NewProductRepository(db)
+
+	product, err := productRepo.FindLastProduct()
+	assert.Nil(t, err)
+
+	orderItemAggregate := aggregate.OrderItemAggregate{}
+
+	orderItemAggregate.Name = "Harry Potter"
+	orderItemAggregate.Description = "Description"
+	orderItemAggregate.Quantity = 1
+	orderItemAggregate.Price = 7000
+	orderItemAggregate.ProductID = product.ID
+
+	factoryOrder := factory.NewAggregateOrderItemFactory(orderItemAggregate)
+
+	addOrderItem, err := factoryOrder.CreateOrderItem(&orderItemAggregate)
+	assert.Nil(t, err)
+
+	err = orderRepo.CreateOrderItem(&addOrderItem)
+	assert.Nil(t, err)
 }
 
 func TestCreateOrder(t *testing.T) {
@@ -27,45 +56,36 @@ func TestCreateOrder(t *testing.T) {
 
 	orderRepo := repository.NewOrderRepository(db)
 
-	item := &order.OrderItem{
-		ID:          uuid.New(),
-		ProductID:   "123",
-		Name:        "Harry Potter",
-		Description: "History",
-		Price:       100,
-		Quantity:    2,
-	}
-	item2 := &order.OrderItem{
-		ID:          uuid.New(),
-		ProductID:   "123",
-		Name:        "Harry Potter",
-		Description: "History",
-		Price:       200,
-		Quantity:    2,
-	}
-	value := []*order.OrderItem{
-		item, item2,
-	}
+	orderAggregate := aggregate.OrderAggregate{}
+	orderItemAggregate := aggregate.OrderItemAggregate{}
 
-	address := &valueobject.Address{
-		Province: "Luanda",
-		County:   "Luanda",
-		Street:   "Morro Bento ||",
-		Number:   123,
-		Country:  "Angola",
-	}
+	orderAggregate.CostumerID = "123"
 
-	order := factory.OrderFactory{
-		Order: aggregate.Order{
-			CustomerID: "123",
-			Order: order.Order{
-				Item: value,
-			},
-			Address: address,
-		},
-	}
+	orderAggregate.Address.Province = "Luanda"
+	orderAggregate.Address.County = "Luanda"
+	orderAggregate.Address.Street = "Morro Bento ||"
+	orderAggregate.Address.Number = 1234
+	orderAggregate.Address.Country = "Angola"
 
-	orderAggre, orderErr := factory.CreateOrder(order)
+	orderItemAggregate.Name = "Harry Potter"
+	orderItemAggregate.Description = "Description"
+	orderItemAggregate.Quantity = 1
+	orderItemAggregate.Price = 7000
+	orderItemAggregate.ProductID = uuid.New()
 
-	err := orderRepo.Create(orderAggre)
+	factoryOrder := factory.NewAggregateFactory(orderAggregate, orderItemAggregate)
+
+	addOrderItem, err := factoryOrder.CreateOrderItem(&orderItemAggregate)
+	assert.Nil(t, err)
+
+	orderAggregate.Item = addOrderItem
+
+	newOder, err := factoryOrder.CreateOrder(&orderAggregate)
+	assert.Nil(t, err)
+
+	err = orderRepo.CreateOrderItem(&addOrderItem)
+	assert.Nil(t, err)
+
+	err = orderRepo.Create(newOder)
+	assert.Nil(t, err)
 }
