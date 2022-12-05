@@ -11,13 +11,14 @@ type Order struct {
 }
 
 type OrderItem struct {
-	Base
-	ProductID   string
+	ID          uuid.UUID `gorm:"type:uuid;primary_key"`
+	ProductID   uuid.UUID
 	Name        string
 	Description string
 	Price       float64
 	Quantity    int
 	OrderID     uuid.UUID
+	Base
 }
 
 type Address struct {

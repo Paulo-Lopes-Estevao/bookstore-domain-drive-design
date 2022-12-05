@@ -20,7 +20,7 @@ type (
 
 	OrderItemAggregate struct {
 		ID          uuid.UUID
-		ProductID   string
+		ProductID   uuid.UUID
 		Name        string
 		Description string
 		Price       float64
@@ -35,7 +35,7 @@ func NewOrderItem(orderItemAggregate *OrderItemAggregate) (*OrderItemAggregate, 
 	}
 	return &OrderItemAggregate{
 		ID:          item.ID,
-		ProductID:   item.Description,
+		ProductID:   item.ProductID,
 		Name:        item.Name,
 		Description: item.Description,
 		Price:       item.Price,
