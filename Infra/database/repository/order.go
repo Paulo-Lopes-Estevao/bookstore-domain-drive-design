@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"bookstore/Infra/database/entities"
 	"bookstore/domain/aggregate"
 
 	"github.com/jinzhu/gorm"
@@ -44,15 +43,7 @@ func (r *OrderRepository) Delete(id string) error {
 	return r.db.Where("id =?", id).Delete(entities).Error
 }
 
-func (r *OrderRepository) CreateOrderItem(item *aggregate.OrderItem) error {
-	entity := entities.OrderItem{
-		ID:          item.ID,
-		ProductID:   item.ProductID,
-		Name:        item.Name,
-		Description: item.Description,
-		Price:       item.Price,
-		Quantity:    item.Quantity,
-	}
+func (r *OrderRepository) CreateOrderItem(entity *aggregate.OrderItem) error {
 	err := r.db.Create(entity).Error
 	if err != nil {
 		return err
