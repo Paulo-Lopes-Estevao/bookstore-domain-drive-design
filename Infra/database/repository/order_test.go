@@ -30,17 +30,17 @@ func TestAddOrderItem(t *testing.T) {
 	product, err := productRepo.FindLastProduct()
 	assert.Nil(t, err)
 
-	orderItemAggregate := &aggregate.OrderItemAggregate{}
+	OrderItem := &aggregate.OrderItem{}
 
-	factoryOrder := factory.NewAggregateOrderItemFactory(orderItemAggregate)
+	factoryOrder := factory.NewAggregateOrderItemFactory(OrderItem)
 
-	orderItemAggregate.Name = "Harry Potter"
-	orderItemAggregate.Description = "Description"
-	orderItemAggregate.Quantity = 1
-	orderItemAggregate.Price = 7000
-	orderItemAggregate.ProductID = product.ID
+	OrderItem.Name = "Harry Potter"
+	OrderItem.Description = "Description"
+	OrderItem.Quantity = 1
+	OrderItem.Price = 7000
+	OrderItem.ProductID = product.ID
 
-	addOrderItem, err := factoryOrder.CreateOrderItem(orderItemAggregate)
+	addOrderItem, err := factoryOrder.CreateOrderItem(OrderItem)
 	assert.Nil(t, err)
 
 	err = orderRepo.CreateOrderItem(addOrderItem)
@@ -57,7 +57,7 @@ func TestCreateOrder(t *testing.T) {
 	orderRepo := repository.NewOrderRepository(db)
 
 	orderAggregate := aggregate.OrderAggregate{}
-	orderItemAggregate := aggregate.OrderItemAggregate{}
+	OrderItem := aggregate.OrderItem{}
 
 	orderAggregate.CostumerID = "123"
 
@@ -67,15 +67,15 @@ func TestCreateOrder(t *testing.T) {
 	orderAggregate.Address.Number = 1234
 	orderAggregate.Address.Country = "Angola"
 
-	orderItemAggregate.Name = "Harry Potter"
-	orderItemAggregate.Description = "Description"
-	orderItemAggregate.Quantity = 1
-	orderItemAggregate.Price = 7000
-	orderItemAggregate.ProductID = uuid.New()
+	OrderItem.Name = "Harry Potter"
+	OrderItem.Description = "Description"
+	OrderItem.Quantity = 1
+	OrderItem.Price = 7000
+	OrderItem.ProductID = uuid.New()
 
-	factoryOrder := factory.NewAggregateFactory(orderAggregate, &orderItemAggregate)
+	factoryOrder := factory.NewAggregateFactory(orderAggregate, &OrderItem)
 
-	addOrderItem, err := factoryOrder.CreateOrderItem(&orderItemAggregate)
+	addOrderItem, err := factoryOrder.CreateOrderItem(&OrderItem)
 	assert.Nil(t, err)
 
 	orderAggregate.Item = addOrderItem

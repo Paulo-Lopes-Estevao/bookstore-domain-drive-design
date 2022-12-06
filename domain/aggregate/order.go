@@ -12,13 +12,13 @@ type (
 	OrderAggregate struct {
 		ID         uuid.UUID
 		CostumerID string
-		Item       *OrderItemAggregate
+		Item       *OrderItem
 		CreatedAt  time.Time
 		UpdatedAt  time.Time
 		Address    valueobject.Address
 	}
 
-	OrderItemAggregate struct {
+	OrderItem struct {
 		ID          uuid.UUID
 		ProductID   uuid.UUID
 		Name        string
@@ -28,12 +28,12 @@ type (
 	}
 )
 
-func NewOrderItem(orderItemAggregate *OrderItemAggregate) (*OrderItemAggregate, error) {
-	item, errItem := order.NewOrderItem(orderItemAggregate.Name, orderItemAggregate.Description, orderItemAggregate.ProductID, orderItemAggregate.Price, orderItemAggregate.Quantity)
+func NewOrderItem(orderItem *OrderItem) (*OrderItem, error) {
+	item, errItem := order.NewOrderItem(orderItem.Name, orderItem.Description, orderItem.ProductID, orderItem.Price, orderItem.Quantity)
 	if errItem != nil {
 		return nil, errItem
 	}
-	return &OrderItemAggregate{
+	return &OrderItem{
 		ID:          item.ID,
 		ProductID:   item.ProductID,
 		Name:        item.Name,
@@ -43,14 +43,14 @@ func NewOrderItem(orderItemAggregate *OrderItemAggregate) (*OrderItemAggregate, 
 	}, nil
 }
 
-func NewOrder(orderAggregate *OrderAggregate, orderItemAggregate *OrderItemAggregate) (*OrderAggregate, error) {
+func NewOrder(orderAggregate *OrderAggregate, OrderItem *OrderItem) (*OrderAggregate, error) {
 
 	err := orderAggregate.AddAddress()
 	if err != nil {
 		return nil, err
 	}
 
-	item := orderItemAggregate.OrderedItem()
+	item := OrderItem.OrderedItem()
 
 	order, err := order.NewOrder(orderAggregate.CostumerID, item)
 	if err != nil {
@@ -64,14 +64,14 @@ func (o OrderAggregate) GetCustomerID() string {
 	return o.CostumerID
 }
 
-func (orderItemAggregate *OrderItemAggregate) OrderedItem() *order.OrderItem {
+func (OrderItem *OrderItem) OrderedItem() *order.OrderItem {
 	item := &order.OrderItem{
-		ID:          orderItemAggregate.ID,
-		ProductID:   orderItemAggregate.ProductID,
-		Name:        orderItemAggregate.Name,
-		Description: orderItemAggregate.Description,
-		Price:       orderItemAggregate.Price,
-		Quantity:    orderItemAggregate.Quantity,
+		ID:          OrderItem.ID,
+		ProductID:   OrderItem.ProductID,
+		Name:        OrderItem.Name,
+		Description: OrderItem.Description,
+		Price:       OrderItem.Price,
+		Quantity:    OrderItem.Quantity,
 	}
 	return item
 }
@@ -80,7 +80,7 @@ func (orderAggregate *OrderAggregate) OrderInformation(order *order.Order, item 
 	return &OrderAggregate{
 		ID:         order.ID,
 		CostumerID: order.CostumerID,
-		Item: &OrderItemAggregate{
+		Item: &OrderItem{
 			ID:          item.ID,
 			ProductID:   item.ProductID,
 			Name:        item.Name,

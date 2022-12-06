@@ -8,19 +8,18 @@ type (
 	// AggregateFactory is the factory interface for Aggregate
 	AggregateFactory interface {
 		CreateOrder(orderFactory *aggregate.OrderAggregate) (*aggregate.OrderAggregate, error)
-		CreateOrderItem(orderItemFactory *aggregate.OrderItemAggregate) (*aggregate.OrderItemAggregate, error)
+		CreateOrderItem(orderItemFactory *aggregate.OrderItem) (*aggregate.OrderItem, error)
 	}
 
 	// AggregateFactoryImpl is the factory implementation for Aggregate
 	AggregateFactoryImpl struct {
 		aggregateOrder     aggregate.OrderAggregate
-		aggregateOrderItem *aggregate.OrderItemAggregate
-
+		aggregateOrderItem *aggregate.OrderItem
 	}
 )
 
 // NewAggregateFactory is the factory constructor for Aggregate
-func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate, aggregateOrderItem *aggregate.OrderItemAggregate) AggregateFactory {
+func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate, aggregateOrderItem *aggregate.OrderItem) AggregateFactory {
 	return &AggregateFactoryImpl{
 		aggregateOrder:     aggregateOrder,
 		aggregateOrderItem: aggregateOrderItem,
@@ -28,7 +27,7 @@ func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate, aggregateOrder
 
 }
 
-func NewAggregateOrderItemFactory(aggregateOrderItem *aggregate.OrderItemAggregate) AggregateFactory {
+func NewAggregateOrderItemFactory(aggregateOrderItem *aggregate.OrderItem) AggregateFactory {
 	return &AggregateFactoryImpl{
 		aggregateOrderItem: aggregateOrderItem,
 	}
@@ -46,12 +45,12 @@ func (factory *AggregateFactoryImpl) CreateOrder(orderFactory *aggregate.OrderAg
 }
 
 // CreateOrderItem is the factory method for CreateOrderItem
-func (factory *AggregateFactoryImpl) CreateOrderItem(orderItemFactory *aggregate.OrderItemAggregate) (*aggregate.OrderItemAggregate, error) {
+func (factory *AggregateFactoryImpl) CreateOrderItem(orderItemFactory *aggregate.OrderItem) (*aggregate.OrderItem, error) {
 	orderItem, err := aggregate.NewOrderItem(orderItemFactory)
 	if err != nil {
 		return nil, err
 	}
-	return &aggregate.OrderItemAggregate{
+	return &aggregate.OrderItem{
 		ID:          orderItem.ID,
 		ProductID:   orderItem.ProductID,
 		Name:        orderItem.Name,

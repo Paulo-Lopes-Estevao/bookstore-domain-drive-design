@@ -44,7 +44,7 @@ func (r *OrderRepository) Delete(id string) error {
 	return r.db.Where("id =?", id).Delete(entities).Error
 }
 
-func (r *OrderRepository) CreateOrderItem(item *aggregate.OrderItemAggregate) error {
+func (r *OrderRepository) CreateOrderItem(item *aggregate.OrderItem) error {
 	entity := entities.OrderItem{
 		ID:          item.ID,
 		ProductID:   item.ProductID,

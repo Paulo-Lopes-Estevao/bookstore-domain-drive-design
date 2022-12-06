@@ -10,7 +10,7 @@ import (
 
 func TestCustomerOrder(t *testing.T) {
 	orderAggregate := &aggregate.OrderAggregate{}
-	orderItemAggregate := &aggregate.OrderItemAggregate{}
+	OrderItem := &aggregate.OrderItem{}
 
 	orderAggregate.CostumerID = "123"
 
@@ -20,13 +20,13 @@ func TestCustomerOrder(t *testing.T) {
 	orderAggregate.Address.Number = 1234
 	orderAggregate.Address.Country = "Angola"
 
-	orderItemAggregate.Name = "Harry Potter"
-	orderItemAggregate.Description = "Description"
-	orderItemAggregate.Quantity = 1
-	orderItemAggregate.Price = 7000
-	orderItemAggregate.ProductID = uuid.New()
+	OrderItem.Name = "Harry Potter"
+	OrderItem.Description = "Description"
+	OrderItem.Quantity = 1
+	OrderItem.Price = 7000
+	OrderItem.ProductID = uuid.New()
 
-	orderItem, err := aggregate.NewOrderItem(orderItemAggregate)
+	orderItem, err := aggregate.NewOrderItem(OrderItem)
 	assert.Nil(t, err)
 
 	ordered, err := aggregate.NewOrder(orderAggregate, orderItem)
