@@ -11,16 +11,16 @@ import (
 
 func TestCreateOrder(t *testing.T) {
 
-	orderAggregate := aggregate.OrderAggregate{}
+	Order := aggregate.Order{}
 	OrderItem := &aggregate.OrderItem{}
 
-	orderAggregate.CostumerID = "123"
+	Order.CostumerID = "123"
 
-	orderAggregate.Address.Province = "Luanda"
-	orderAggregate.Address.County = "Luanda"
-	orderAggregate.Address.Street = "Morro Bento ||"
-	orderAggregate.Address.Number = 1234
-	orderAggregate.Address.Country = "Angola"
+	Order.Address.Province = "Luanda"
+	Order.Address.County = "Luanda"
+	Order.Address.Street = "Morro Bento ||"
+	Order.Address.Number = 1234
+	Order.Address.Country = "Angola"
 
 	OrderItem.Name = "Harry Potter"
 	OrderItem.Description = "Description"
@@ -28,14 +28,14 @@ func TestCreateOrder(t *testing.T) {
 	OrderItem.Price = 7000
 	OrderItem.ProductID = uuid.New()
 
-	factoryOrder := factory.NewAggregateFactory(orderAggregate, OrderItem)
+	factoryOrder := factory.NewAggregateFactory(Order, OrderItem)
 
 	addOrderItem, err := factoryOrder.CreateOrderItem(OrderItem)
 	assert.Nil(t, err)
 
-	orderAggregate.Item = addOrderItem
+	Order.Item = addOrderItem
 
-	newOder, err := factoryOrder.CreateOrder(&orderAggregate)
+	newOder, err := factoryOrder.CreateOrder(&Order)
 
 	assert.Nil(t, err)
 

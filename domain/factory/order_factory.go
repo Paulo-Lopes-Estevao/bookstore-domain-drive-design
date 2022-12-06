@@ -7,19 +7,19 @@ import (
 type (
 	// AggregateFactory is the factory interface for Aggregate
 	AggregateFactory interface {
-		CreateOrder(orderFactory *aggregate.OrderAggregate) (*aggregate.OrderAggregate, error)
+		CreateOrder(orderFactory *aggregate.Order) (*aggregate.Order, error)
 		CreateOrderItem(orderItemFactory *aggregate.OrderItem) (*aggregate.OrderItem, error)
 	}
 
 	// AggregateFactoryImpl is the factory implementation for Aggregate
 	AggregateFactoryImpl struct {
-		aggregateOrder     aggregate.OrderAggregate
+		aggregateOrder     aggregate.Order
 		aggregateOrderItem *aggregate.OrderItem
 	}
 )
 
 // NewAggregateFactory is the factory constructor for Aggregate
-func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate, aggregateOrderItem *aggregate.OrderItem) AggregateFactory {
+func NewAggregateFactory(aggregateOrder aggregate.Order, aggregateOrderItem *aggregate.OrderItem) AggregateFactory {
 	return &AggregateFactoryImpl{
 		aggregateOrder:     aggregateOrder,
 		aggregateOrderItem: aggregateOrderItem,
@@ -35,7 +35,7 @@ func NewAggregateOrderItemFactory(aggregateOrderItem *aggregate.OrderItem) Aggre
 }
 
 // CreateOrder is the factory method for CreateOrder
-func (factory *AggregateFactoryImpl) CreateOrder(orderFactory *aggregate.OrderAggregate) (*aggregate.OrderAggregate, error) {
+func (factory *AggregateFactoryImpl) CreateOrder(orderFactory *aggregate.Order) (*aggregate.Order, error) {
 	order, err := aggregate.NewOrder(orderFactory, orderFactory.Item)
 	if err != nil {
 		return nil, err

@@ -9,7 +9,7 @@ import (
 )
 
 type (
-	OrderAggregate struct {
+	Order struct {
 		ID         uuid.UUID
 		CostumerID string
 		Item       *OrderItem
@@ -43,24 +43,24 @@ func NewOrderItem(orderItem *OrderItem) (*OrderItem, error) {
 	}, nil
 }
 
-func NewOrder(orderAggregate *OrderAggregate, OrderItem *OrderItem) (*OrderAggregate, error) {
+func NewOrder(Order *Order, OrderItem *OrderItem) (*Order, error) {
 
-	err := orderAggregate.AddAddress()
+	err := Order.AddAddress()
 	if err != nil {
 		return nil, err
 	}
 
 	item := OrderItem.OrderedItem()
 
-	order, err := order.NewOrder(orderAggregate.CostumerID, item)
+	order, err := order.NewOrder(Order.CostumerID, item)
 	if err != nil {
 		return nil, err
 	}
 
-	return orderAggregate.OrderInformation(order, item), nil
+	return Order.OrderInformation(order, item), nil
 }
 
-func (o OrderAggregate) GetCustomerID() string {
+func (o Order) GetCustomerID() string {
 	return o.CostumerID
 }
 
@@ -76,8 +76,8 @@ func (OrderItem *OrderItem) OrderedItem() *order.OrderItem {
 	return item
 }
 
-func (orderAggregate *OrderAggregate) OrderInformation(order *order.Order, item *order.OrderItem) *OrderAggregate {
-	return &OrderAggregate{
+func (o *Order) OrderInformation(order *order.Order, item *order.OrderItem) *Order {
+	return &Order{
 		ID:         order.ID,
 		CostumerID: order.CostumerID,
 		Item: &OrderItem{
@@ -87,11 +87,11 @@ func (orderAggregate *OrderAggregate) OrderInformation(order *order.Order, item 
 			Description: item.Description,
 			Price:       item.Price,
 		},
-		Address: orderAggregate.Address,
+		Address: o.Address,
 	}
 }
 
-func (orderAddress *OrderAggregate) AddAddress() error {
+func (orderAddress *Order) AddAddress() error {
 	_, err := valueobject.NewAddress(orderAddress.Address.Province, orderAddress.Address.County, orderAddress.Address.Street, orderAddress.Address.Number, orderAddress.Address.Country)
 	if err != nil {
 		return err

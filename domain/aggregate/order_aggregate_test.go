@@ -9,16 +9,16 @@ import (
 )
 
 func TestCustomerOrder(t *testing.T) {
-	orderAggregate := &aggregate.OrderAggregate{}
+	Order := &aggregate.Order{}
 	OrderItem := &aggregate.OrderItem{}
 
-	orderAggregate.CostumerID = "123"
+	Order.CostumerID = "123"
 
-	orderAggregate.Address.Province = "Luanda"
-	orderAggregate.Address.County = "Luanda"
-	orderAggregate.Address.Street = "Morro Bento ||"
-	orderAggregate.Address.Number = 1234
-	orderAggregate.Address.Country = "Angola"
+	Order.Address.Province = "Luanda"
+	Order.Address.County = "Luanda"
+	Order.Address.Street = "Morro Bento ||"
+	Order.Address.Number = 1234
+	Order.Address.Country = "Angola"
 
 	OrderItem.Name = "Harry Potter"
 	OrderItem.Description = "Description"
@@ -29,7 +29,7 @@ func TestCustomerOrder(t *testing.T) {
 	orderItem, err := aggregate.NewOrderItem(OrderItem)
 	assert.Nil(t, err)
 
-	ordered, err := aggregate.NewOrder(orderAggregate, orderItem)
+	ordered, err := aggregate.NewOrder(Order, orderItem)
 	assert.Nil(t, err)
 	assert.Equal(t, ordered.CostumerID, "123")
 
