@@ -1,2 +1,3 @@
 .env
 .pgdata
+.vscode/launch.json
