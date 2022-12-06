@@ -8,21 +8,19 @@ type (
 	// AggregateFactory is the factory interface for Aggregate
 	AggregateFactory interface {
 		CreateOrder(orderFactory *aggregate.OrderAggregate) (*aggregate.OrderAggregate, error)
-		CreateOrderItem(orderItemFactory *aggregate.OrderItemAggregate) (aggregate.OrderItemAggregate, error)
+		CreateOrderItem(orderItemFactory *aggregate.OrderItemAggregate) (*aggregate.OrderItemAggregate, error)
 	}
 
 	// AggregateFactoryImpl is the factory implementation for Aggregate
 	AggregateFactoryImpl struct {
-		//aggregateRepository aggregate.Repository
 		aggregateOrder     aggregate.OrderAggregate
-		aggregateOrderItem aggregate.OrderItemAggregate
-		//aggregateService    aggregate.Service
-		//logger              Logger
+		aggregateOrderItem *aggregate.OrderItemAggregate
+
 	}
 )
 
 // NewAggregateFactory is the factory constructor for Aggregate
-func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate, aggregateOrderItem aggregate.OrderItemAggregate) AggregateFactory {
+func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate, aggregateOrderItem *aggregate.OrderItemAggregate) AggregateFactory {
 	return &AggregateFactoryImpl{
 		aggregateOrder:     aggregateOrder,
 		aggregateOrderItem: aggregateOrderItem,
@@ -30,9 +28,16 @@ func NewAggregateFactory(aggregateOrder aggregate.OrderAggregate, aggregateOrder
 
 }
 
+func NewAggregateOrderItemFactory(aggregateOrderItem *aggregate.OrderItemAggregate) AggregateFactory {
+	return &AggregateFactoryImpl{
+		aggregateOrderItem: aggregateOrderItem,
+	}
+
+}
+
 // CreateOrder is the factory method for CreateOrder
 func (factory *AggregateFactoryImpl) CreateOrder(orderFactory *aggregate.OrderAggregate) (*aggregate.OrderAggregate, error) {
-	order, err := aggregate.NewOrder(orderFactory, &orderFactory.Item)
+	order, err := aggregate.NewOrder(orderFactory, orderFactory.Item)
 	if err != nil {
 		return nil, err
 	}
@@ -41,12 +46,12 @@ func (factory *AggregateFactoryImpl) CreateOrder(orderFactory *aggregate.OrderAg
 }
 
 // CreateOrderItem is the factory method for CreateOrderItem
-func (factory *AggregateFactoryImpl) CreateOrderItem(orderItemFactory *aggregate.OrderItemAggregate) (aggregate.OrderItemAggregate, error) {
+func (factory *AggregateFactoryImpl) CreateOrderItem(orderItemFactory *aggregate.OrderItemAggregate) (*aggregate.OrderItemAggregate, error) {
 	orderItem, err := aggregate.NewOrderItem(orderItemFactory)
 	if err != nil {
-		return aggregate.OrderItemAggregate{}, err
+		return nil, err
 	}
-	return aggregate.OrderItemAggregate{
+	return &aggregate.OrderItemAggregate{
 		ID:          orderItem.ID,
 		ProductID:   orderItem.ProductID,
 		Name:        orderItem.Name,

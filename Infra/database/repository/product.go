@@ -1,7 +1,9 @@
 package repository
 
 import (
+	"bookstore/Infra/database/entities"
 	"bookstore/domain/aggregate"
+	"errors"
 
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
@@ -41,6 +43,18 @@ func (r *ProductRepository) FindAll() ([]aggregate.Product, error) {
 		return nil, err
 	}
 	return entities, nil
+}
+
+func (r *ProductRepository) FindLastProduct() (*aggregate.Product, error) {
+	var entity entities.Product
+	if err := r.db.Last(&entity).Error; err != nil {
+		return nil, errors.New("product not found")
+	}
+	return &aggregate.Product{
+		ID:    entity.ID,
+		Name:  entity.Name,
+		Price: entity.Price,
+	}, nil
 }
 
 func (r *ProductRepository) CreateCategory(name string) error {

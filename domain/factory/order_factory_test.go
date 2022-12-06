@@ -12,7 +12,7 @@ import (
 func TestCreateOrder(t *testing.T) {
 
 	orderAggregate := aggregate.OrderAggregate{}
-	orderItemAggregate := aggregate.OrderItemAggregate{}
+	orderItemAggregate := &aggregate.OrderItemAggregate{}
 
 	orderAggregate.CostumerID = "123"
 
@@ -30,7 +30,7 @@ func TestCreateOrder(t *testing.T) {
 
 	factoryOrder := factory.NewAggregateFactory(orderAggregate, orderItemAggregate)
 
-	addOrderItem, err := factoryOrder.CreateOrderItem(&orderItemAggregate)
+	addOrderItem, err := factoryOrder.CreateOrderItem(orderItemAggregate)
 	assert.Nil(t, err)
 
 	orderAggregate.Item = addOrderItem

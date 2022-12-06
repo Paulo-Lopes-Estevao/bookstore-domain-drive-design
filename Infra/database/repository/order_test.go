@@ -30,7 +30,9 @@ func TestAddOrderItem(t *testing.T) {
 	product, err := productRepo.FindLastProduct()
 	assert.Nil(t, err)
 
-	orderItemAggregate := aggregate.OrderItemAggregate{}
+	orderItemAggregate := &aggregate.OrderItemAggregate{}
+
+	factoryOrder := factory.NewAggregateOrderItemFactory(orderItemAggregate)
 
 	orderItemAggregate.Name = "Harry Potter"
 	orderItemAggregate.Description = "Description"
@@ -38,12 +40,10 @@ func TestAddOrderItem(t *testing.T) {
 	orderItemAggregate.Price = 7000
 	orderItemAggregate.ProductID = product.ID
 
-	factoryOrder := factory.NewAggregateOrderItemFactory(orderItemAggregate)
-
-	addOrderItem, err := factoryOrder.CreateOrderItem(&orderItemAggregate)
+	addOrderItem, err := factoryOrder.CreateOrderItem(orderItemAggregate)
 	assert.Nil(t, err)
 
-	err = orderRepo.CreateOrderItem(&addOrderItem)
+	err = orderRepo.CreateOrderItem(addOrderItem)
 	assert.Nil(t, err)
 }
 
@@ -73,7 +73,7 @@ func TestCreateOrder(t *testing.T) {
 	orderItemAggregate.Price = 7000
 	orderItemAggregate.ProductID = uuid.New()
 
-	factoryOrder := factory.NewAggregateFactory(orderAggregate, orderItemAggregate)
+	factoryOrder := factory.NewAggregateFactory(orderAggregate, &orderItemAggregate)
 
 	addOrderItem, err := factoryOrder.CreateOrderItem(&orderItemAggregate)
 	assert.Nil(t, err)
@@ -83,7 +83,7 @@ func TestCreateOrder(t *testing.T) {
 	newOder, err := factoryOrder.CreateOrder(&orderAggregate)
 	assert.Nil(t, err)
 
-	err = orderRepo.CreateOrderItem(&addOrderItem)
+	err = orderRepo.CreateOrderItem(addOrderItem)
 	assert.Nil(t, err)
 
 	err = orderRepo.Create(newOder)

@@ -7,5 +7,5 @@ import (
 
 type IOrderRepository interface {
 	repository.Repository[aggregate.OrderAggregate]
-	CreateOrderItem(productID, name, description, productId string, price float64, quantity int) error
+	CreateOrderItem(orderItemFactory *aggregate.OrderItemAggregate) error
 }

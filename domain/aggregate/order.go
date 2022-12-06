@@ -12,7 +12,7 @@ type (
 	OrderAggregate struct {
 		ID         uuid.UUID
 		CostumerID string
-		Item       OrderItemAggregate
+		Item       *OrderItemAggregate
 		CreatedAt  time.Time
 		UpdatedAt  time.Time
 		Address    valueobject.Address
@@ -80,7 +80,7 @@ func (orderAggregate *OrderAggregate) OrderInformation(order *order.Order, item 
 	return &OrderAggregate{
 		ID:         order.ID,
 		CostumerID: order.CostumerID,
-		Item: OrderItemAggregate{
+		Item: &OrderItemAggregate{
 			ID:          item.ID,
 			ProductID:   item.ProductID,
 			Name:        item.Name,
