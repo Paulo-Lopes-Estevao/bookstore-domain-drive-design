@@ -9,7 +9,7 @@ import (
 )
 
 func TestOderwhenOrderIdIsEmptyWithCustomerId(t *testing.T) {
-	_, err := order.NewOrder("123", nil)
+	_, err := order.NewOrder("", &order.OrderItem{})
 	if assert.Error(t, err) {
 		assert.Equal(t, "Costumer ID cannot be empty", err.Error())
 	}
@@ -34,9 +34,7 @@ func TestOderwhenOrderCalculateTotal(t *testing.T) {
 }
 
 func TestOderwhenOrderItemQtyIsLessOrEqualZero0(t *testing.T) {
-	orderItem, _ := order.NewOrderItem("Harry Potter", "History", uuid.New(), 400, 0)
-
-	_, err := order.NewOrder("123", orderItem)
+	_, err := order.NewOrderItem("Harry Potter", "History", uuid.New(), 400, 0)
 
 	if assert.Error(t, err) {
 		assert.Equal(t, "OrderItem Quantity cannot be zero", err.Error())
