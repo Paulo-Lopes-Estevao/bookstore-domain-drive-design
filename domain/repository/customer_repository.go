@@ -6,5 +6,5 @@ import (
 )
 
 type ICustomerRepository interface {
-	repository.Repository[aggregate.Customer]
+	repository.IRepository[aggregate.Customer]
 }

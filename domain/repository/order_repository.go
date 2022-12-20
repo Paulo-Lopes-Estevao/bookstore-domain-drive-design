@@ -6,6 +6,6 @@ import (
 )
 
 type IOrderRepository interface {
-	repository.Repository[aggregate.Order]
+	repository.IRepository[aggregate.Order]
 	CreateOrderItem(orderItemFactory *aggregate.OrderItem) error
 }

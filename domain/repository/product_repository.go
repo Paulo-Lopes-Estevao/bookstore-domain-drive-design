@@ -6,6 +6,6 @@ import (
 )
 
 type IProductRepository interface {
-	repository.Repository[aggregate.Product]
+	repository.IRepository[aggregate.Product]
 	CreateCategory(name string) error
 }
