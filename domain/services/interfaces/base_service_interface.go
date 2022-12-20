@@ -1,6 +1,6 @@
 package interfaces
 
-type ICustumerService[T any] interface {
+type IBaseService[T any] interface {
 	Create(entity *T) error
 	Update(entity *T) error
 	GetById(id string) (*T, error)
