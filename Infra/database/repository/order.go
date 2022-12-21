@@ -30,12 +30,12 @@ func (r *OrderRepository) Find(id string) (*aggregate.Order, error) {
 	return &entity, nil
 }
 
-func (r *OrderRepository) FindAll() ([]aggregate.Order, error) {
-	var entities []aggregate.Order
-	if err := r.db.Find(&entities).Error; err != nil {
+func (r *OrderRepository) FindAll() ([]*aggregate.Order, error) {
+	var order []*aggregate.Order
+	if err := r.db.Find(&order).Error; err != nil {
 		return nil, err
 	}
-	return entities, nil
+	return order, nil
 }
 
 func (r *OrderRepository) Delete(id string) error {
