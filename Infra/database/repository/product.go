@@ -37,8 +37,8 @@ func (r *ProductRepository) Find(id string) (*aggregate.Product, error) {
 	return &entity, nil
 }
 
-func (r *ProductRepository) FindAll() ([]aggregate.Product, error) {
-	var entities []aggregate.Product
+func (r *ProductRepository) FindAll() ([]*aggregate.Product, error) {
+	var entities []*aggregate.Product
 	if err := r.db.Find(&entities).Error; err != nil {
 		return nil, err
 	}
