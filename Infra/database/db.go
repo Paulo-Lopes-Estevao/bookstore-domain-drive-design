@@ -1,7 +1,7 @@
 package database
 
 import (
-	"bookstore/Infra/database/entities"
+	"bookstore/infra/database/entities"
 	"fmt"
 
 	"github.com/jinzhu/gorm"
@@ -14,7 +14,7 @@ func DB(drive string, dsn string) (*gorm.DB, error) {
 
 	if err != nil {
 
-			return nil, err
+		return nil, err
 
 	}
 
