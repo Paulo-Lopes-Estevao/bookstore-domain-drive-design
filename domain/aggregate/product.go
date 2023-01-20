@@ -7,10 +7,11 @@ import (
 )
 
 type Product struct {
-	ID         uuid.UUID
-	CategoryID string
-	Name       string
-	Price      float64
+	ID          uuid.UUID
+	CategoryID  string
+	Name        string
+	Price       float64
+	Description string
 }
 
 type Category struct {
@@ -29,8 +30,8 @@ func NewCategory(name string) (*Category, error) {
 	}, nil
 }
 
-func NewProduct(categoryID, name string, price float64) (*Product, error) {
-	product, err := product.NewProduct(uuid.New(), categoryID, name, price)
+func NewProduct(categoryID, name string, price float64, description string) (*Product, error) {
+	product, err := product.NewProduct(uuid.New(), categoryID, name, price, description)
 	if err != nil {
 		return nil, err
 	}

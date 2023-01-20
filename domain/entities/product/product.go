@@ -12,16 +12,18 @@ type Product struct {
 	CategoryID string
 	Name       string
 	Price      float64
+	Description string
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
 
-func NewProduct(id uuid.UUID, categoryID, name string, price float64) (*Product, error) {
+func NewProduct(id uuid.UUID, categoryID, name string, price float64, description string) (*Product, error) {
 	product := &Product{
 		ID:         id,
 		CategoryID: categoryID,
 		Name:       name,
 		Price:      price,
+		Description: description,
 	}
 	product.CreatedAt = time.Now()
 	if err := product.Validate(); err != nil {
