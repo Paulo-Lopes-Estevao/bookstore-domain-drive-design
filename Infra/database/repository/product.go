@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"bookstore/Infra/database/entities"
 	"bookstore/domain/aggregate"
 	"errors"
 
@@ -46,7 +45,7 @@ func (r *ProductRepository) FindAll() ([]*aggregate.Product, error) {
 }
 
 func (r *ProductRepository) FindLastProduct() (*aggregate.Product, error) {
-	var entity entities.Product
+	var entity *aggregate.Product
 	if err := r.db.Last(&entity).Error; err != nil {
 		return nil, errors.New("product not found")
 	}
