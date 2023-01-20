@@ -28,20 +28,25 @@ func (r *ProductRepository) Delete(id string) error {
 	return r.db.Where("id =?", id).Delete(aggregate.Product{}).Error
 }
 
-func (r *ProductRepository) Find(id string) (*aggregate.Product, error) {
-	var entity aggregate.Product
-	if err := r.db.Where("id =?", id).Find(&entity).Error; err != nil {
-		return nil, err
-	}
-	return &entity, nil
-}
-
 func (r *ProductRepository) FindAll() ([]*aggregate.Product, error) {
 	var entities []*aggregate.Product
 	if err := r.db.Find(&entities).Error; err != nil {
 		return nil, err
 	}
 	return entities, nil
+}
+
+func (r *ProductRepository) FindByID(id string) (*aggregate.Product, error) {
+	var entity *aggregate.Product
+	if err := r.db.Where("id =?", id).Find(&entity).Error; err != nil {
+		return nil, errors.New("product not found")
+	}
+	return &aggregate.Product{
+		ID:          entity.ID,
+		Name:        entity.Name,
+		Price:       entity.Price,
+		Description: entity.Description,
+	}, nil
 }
 
 func (r *ProductRepository) FindLastProduct() (*aggregate.Product, error) {
