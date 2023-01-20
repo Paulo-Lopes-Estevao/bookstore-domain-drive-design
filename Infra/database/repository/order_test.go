@@ -1,11 +1,11 @@
 package repository_test
 
 import (
-	"bookstore/Infra/database"
-	"bookstore/Infra/database/postgresql"
-	"bookstore/Infra/database/repository"
 	"bookstore/domain/aggregate"
 	"bookstore/domain/factory"
+	"bookstore/infra/database"
+	"bookstore/infra/database/postgresql"
+	"bookstore/infra/database/repository"
 	"testing"
 
 	"github.com/google/uuid"
