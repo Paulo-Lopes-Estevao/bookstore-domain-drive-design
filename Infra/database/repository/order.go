@@ -22,7 +22,7 @@ func (r *OrderRepository) Update(entity *aggregate.Order) error {
 	return r.db.Model(entity).Update(entity).Error
 }
 
-func (r *OrderRepository) Find(id string) (*aggregate.Order, error) {
+func (r *OrderRepository) FindByID(id string) (*aggregate.Order, error) {
 	var entity aggregate.Order
 	if err := r.db.Where("id =?", id).Find(&entity).Error; err != nil {
 		return nil, err
