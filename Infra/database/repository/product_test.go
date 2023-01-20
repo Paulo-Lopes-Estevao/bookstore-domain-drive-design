@@ -1,11 +1,11 @@
 package repository_test
 
 import (
-	"bookstore/Infra/database"
-	"bookstore/Infra/database/postgresql"
-	"bookstore/Infra/database/repository"
 	"bookstore/domain/aggregate"
 	"bookstore/domain/factory"
+	"bookstore/infra/database"
+	"bookstore/infra/database/postgresql"
+	"bookstore/infra/database/repository"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -33,10 +33,10 @@ func TestCreateCategory(t *testing.T) {
 
 	product := aggregate.Product{}
 	product.Name = "Harry Potter"
-	product.Price = 5400
+	product.Price = 5400.0
 	product.CategoryID = category.ID.String()
 
-	produFactory, errProd := factory.CreatedProduct(product.CategoryID, product.Name, product.Price)
+	produFactory, errProd := factory.CreatedProduct(product.CategoryID, product.Name, product.Price, product.Description)
 	assert.Nil(t, errProd)
 
 	errProduct := productRepo.Create(produFactory)
