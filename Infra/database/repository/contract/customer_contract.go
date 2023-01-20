@@ -1,8 +1,8 @@
 package contract
 
 import (
-	"bookstore/Infra/database/repository"
 	repoDomain "bookstore/domain/repository"
+	"bookstore/infra/database/repository"
 
 	"github.com/jinzhu/gorm"
 )
