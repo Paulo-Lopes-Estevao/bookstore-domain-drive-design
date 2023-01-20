@@ -1,8 +1,8 @@
 package contract
 
 import (
-	"bookstore/Infra/database/repository"
 	repoDomain "bookstore/domain/repository"
+	"bookstore/infra/database/repository"
 
 	"github.com/jinzhu/gorm"
 )
@@ -17,8 +17,8 @@ type ProductContractRepository struct {
 
 func NewProductContractRepository(db *gorm.DB) *ProductContractRepository {
 	return &ProductContractRepository{
-        db: db,
-    }
+		db: db,
+	}
 }
 
 func (r *ProductContractRepository) ProductContractRepository() repoDomain.IProductRepository {
