@@ -22,7 +22,7 @@ func (r *CustomerRepository) Update(entity *aggregate.Customer) error {
 	return r.db.Save(entity).Error
 }
 
-func (r *CustomerRepository) Find(id string) (*aggregate.Customer, error) {
+func (r *CustomerRepository) FindByID(id string) (*aggregate.Customer, error) {
 	var customer aggregate.Customer
 	if err := r.db.Where("id =?", id).Find(&customer).Error; err != nil {
 		return nil, err
