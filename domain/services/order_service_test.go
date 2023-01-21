@@ -10,7 +10,7 @@ import (
 )
 
 func TestTotalOrderPrice(t *testing.T) {
-	orderItem, _ := order.NewOrderItem("Harry Potter", "History", uuid.New(), 400, 3)
+	orderItem, _ := order.NewOrderItem("Harry Potter", "History", uuid.New(), 400, 3, uuid.New())
 
 	order, err := order.NewOrder("123", orderItem)
 	assert.NoError(t, err)
