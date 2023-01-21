@@ -64,3 +64,41 @@ func (r *ProductRepository) FindLastProduct() (*aggregate.Product, error) {
 func (r *ProductRepository) CreateCategory(name string) error {
 	return r.db.Model(&aggregate.Category{}).Create(&aggregate.Category{ID: uuid.New(), Name: name}).Error
 }
+
+func (r *ProductRepository) FindAllCategory() ([]*aggregate.Category, error) {
+	var entities []*aggregate.Category
+	if err := r.db.Find(&entities).Error; err != nil {
+		return nil, err
+	}
+	return entities, nil
+}
+
+func (r *ProductRepository) FindCategoryByID(id string) (*aggregate.Category, error) {
+	var entity *aggregate.Category
+	if err := r.db.Where("id =?", id).Find(&entity).Error; err != nil {
+		return nil, errors.New("category not found")
+	}
+	return &aggregate.Category{
+		ID:   entity.ID,
+		Name: entity.Name,
+	}, nil
+}
+
+func (r *ProductRepository) FindCategoryByName(name string) (*aggregate.Category, error) {
+	var entity *aggregate.Category
+	if err := r.db.Where("name =?", name).Find(&entity).Error; err != nil {
+		return nil, errors.New("category not found")
+	}
+	return &aggregate.Category{
+		ID:   entity.ID,
+		Name: entity.Name,
+	}, nil
+}
+
+func (r *ProductRepository) FindProductByCategory(categoryID string) ([]*aggregate.Product, error) {
+	var entities []*aggregate.Product
+	if err := r.db.Where("category_id =?", categoryID).Find(&entities).Error; err != nil {
+		return nil, err
+	}
+	return entities, nil
+}
