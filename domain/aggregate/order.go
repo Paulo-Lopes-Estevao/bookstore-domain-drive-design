@@ -21,6 +21,7 @@ type (
 	OrderItem struct {
 		ID          uuid.UUID
 		ProductID   uuid.UUID
+		OrderID     uuid.UUID
 		Name        string
 		Description string
 		Price       float64
@@ -29,7 +30,14 @@ type (
 )
 
 func NewOrderItem(orderItem *OrderItem) (*OrderItem, error) {
-	item, errItem := order.NewOrderItem(orderItem.Name, orderItem.Description, orderItem.ProductID, orderItem.Price, orderItem.Quantity)
+	item, errItem := order.NewOrderItem(
+		orderItem.Name,
+		orderItem.Description,
+		orderItem.ProductID,
+		orderItem.Price,
+		orderItem.Quantity,
+		orderItem.OrderID,
+	)
 	if errItem != nil {
 		return nil, errItem
 	}
@@ -68,6 +76,7 @@ func (OrderItem *OrderItem) OrderedItem() *order.OrderItem {
 	item := &order.OrderItem{
 		ID:          OrderItem.ID,
 		ProductID:   OrderItem.ProductID,
+		OrderID:     OrderItem.OrderID,
 		Name:        OrderItem.Name,
 		Description: OrderItem.Description,
 		Price:       OrderItem.Price,
@@ -83,6 +92,7 @@ func (o *Order) OrderInformation(order *order.Order, item *order.OrderItem) *Ord
 		Item: &OrderItem{
 			ID:          item.ID,
 			ProductID:   item.ProductID,
+			OrderID:     item.OrderID,
 			Name:        item.Name,
 			Description: item.Description,
 			Price:       item.Price,
