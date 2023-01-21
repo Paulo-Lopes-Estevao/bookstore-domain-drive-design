@@ -25,7 +25,7 @@ func (c *customerService) Update(entity *aggregate.Customer) error {
 }
 
 func (c *customerService) GetById(id string) (*aggregate.Customer, error) {
-	result, err := c.ICustomerRepository.Find(id)
+	result, err := c.ICustomerRepository.FindByID(id)
 	if err != nil {
 		return nil, err
 	}
