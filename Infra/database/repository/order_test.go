@@ -23,9 +23,9 @@ func TestAddOrderItem(t *testing.T) {
 
 	defer db.Close()
 
-	orderRepo := repository.NewOrderRepository(db)
-
 	productRepo := repository.NewProductRepository(db)
+
+	ordeItemRepo := repository.NewOrderItemRepository(db)
 
 	product, err := productRepo.FindLastProduct()
 	assert.Nil(t, err)
@@ -40,11 +40,10 @@ func TestAddOrderItem(t *testing.T) {
 	OrderItem.Price = 7000
 	OrderItem.ProductID = product.ID
 
-	addOrderItem, err := factoryOrder.CreateOrderItem(OrderItem)
-	assert.Nil(t, err)
+	addOrderItem, _ := factoryOrder.CreateOrderItem(OrderItem)
 
-	err = orderRepo.CreateOrderItem(addOrderItem)
-	assert.Nil(t, err)
+	errOrderItem := ordeItemRepo.Create(addOrderItem)
+	assert.Nil(t, errOrderItem)
 }
 
 func TestCreateOrder(t *testing.T) {
@@ -55,6 +54,8 @@ func TestCreateOrder(t *testing.T) {
 	defer db.Close()
 
 	orderRepo := repository.NewOrderRepository(db)
+
+	ordeItemRepo := repository.NewOrderItemRepository(db)
 
 	Order := aggregate.Order{}
 	OrderItem := aggregate.OrderItem{}
@@ -83,7 +84,7 @@ func TestCreateOrder(t *testing.T) {
 	newOder, err := factoryOrder.CreateOrder(&Order)
 	assert.Nil(t, err)
 
-	err = orderRepo.CreateOrderItem(addOrderItem)
+	err = ordeItemRepo.Create(addOrderItem)
 	assert.Nil(t, err)
 
 	err = orderRepo.Create(newOder)
