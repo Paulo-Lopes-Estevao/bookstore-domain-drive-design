@@ -10,6 +10,7 @@ import (
 type OrderItem struct {
 	ID          uuid.UUID
 	ProductID   uuid.UUID
+	OrderID     uuid.UUID
 	Name        string
 	Description string
 	Price       float64
@@ -18,10 +19,11 @@ type OrderItem struct {
 	UpdatedAt   time.Time
 }
 
-func NewOrderItem(name, description string, productId uuid.UUID, price float64, quantity int) (*OrderItem, error) {
+func NewOrderItem(name, description string, productId uuid.UUID, price float64, quantity int, orderID uuid.UUID) (*OrderItem, error) {
 	orderItem := &OrderItem{
 		ID:          uuid.New(),
 		ProductID:   productId,
+		OrderID:     orderID,
 		Name:        name,
 		Description: description,
 		Price:       price,
@@ -43,7 +45,10 @@ func (orderItem *OrderItem) Validate() error {
 		return errors.New("OrderItem ID cannot be empty")
 	}
 	if orderItem.ProductID == uuid.Nil {
-		return errors.New("Product ID cannot be empty")
+		return errors.New("ProductID cannot be empty")
+	}
+	if orderItem.OrderID == uuid.Nil {
+		return errors.New("OrderID cannot be empty")
 	}
 	if orderItem.Name == "" {
 		return errors.New("OrderItem Name cannot be empty")
