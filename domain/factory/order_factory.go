@@ -6,36 +6,36 @@ import (
 
 type (
 	// AggregateFactory is the factory interface for Aggregate
-	AggregateFactory interface {
+	IOrderAggregateFactory interface {
 		CreateOrder(orderFactory *aggregate.Order) (*aggregate.Order, error)
 		CreateOrderItem(orderItemFactory *aggregate.OrderItem) (*aggregate.OrderItem, error)
 	}
 
 	// AggregateFactoryImpl is the factory implementation for Aggregate
-	AggregateFactoryImpl struct {
+	OrderAggregateFactoryImpl struct {
 		aggregateOrder     aggregate.Order
 		aggregateOrderItem *aggregate.OrderItem
 	}
 )
 
 // NewAggregateFactory is the factory constructor for Aggregate
-func NewAggregateFactory(aggregateOrder aggregate.Order, aggregateOrderItem *aggregate.OrderItem) AggregateFactory {
-	return &AggregateFactoryImpl{
+func NewAggregateFactory(aggregateOrder aggregate.Order, aggregateOrderItem *aggregate.OrderItem) IOrderAggregateFactory {
+	return &OrderAggregateFactoryImpl{
 		aggregateOrder:     aggregateOrder,
 		aggregateOrderItem: aggregateOrderItem,
 	}
 
 }
 
-func NewAggregateOrderItemFactory(aggregateOrderItem *aggregate.OrderItem) AggregateFactory {
-	return &AggregateFactoryImpl{
+func NewAggregateOrderItemFactory(aggregateOrderItem *aggregate.OrderItem) IOrderAggregateFactory {
+	return &OrderAggregateFactoryImpl{
 		aggregateOrderItem: aggregateOrderItem,
 	}
 
 }
 
 // CreateOrder is the factory method for CreateOrder
-func (factory *AggregateFactoryImpl) CreateOrder(orderFactory *aggregate.Order) (*aggregate.Order, error) {
+func (factory *OrderAggregateFactoryImpl) CreateOrder(orderFactory *aggregate.Order) (*aggregate.Order, error) {
 	order, err := aggregate.NewOrder(orderFactory, orderFactory.Item)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (factory *AggregateFactoryImpl) CreateOrder(orderFactory *aggregate.Order) 
 }
 
 // CreateOrderItem is the factory method for CreateOrderItem
-func (factory *AggregateFactoryImpl) CreateOrderItem(orderItemFactory *aggregate.OrderItem) (*aggregate.OrderItem, error) {
+func (factory *OrderAggregateFactoryImpl) CreateOrderItem(orderItemFactory *aggregate.OrderItem) (*aggregate.OrderItem, error) {
 	orderItem, err := aggregate.NewOrderItem(orderItemFactory)
 	if err != nil {
 		return nil, err
