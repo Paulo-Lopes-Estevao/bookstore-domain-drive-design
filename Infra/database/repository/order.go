@@ -19,7 +19,7 @@ func (r *OrderRepository) Create(entity *aggregate.Order) error {
 }
 
 func (r *OrderRepository) Update(entity *aggregate.Order) error {
-	return r.db.Model(entity).Update(entity).Error
+	return r.db.Save(entity).Error
 }
 
 func (r *OrderRepository) FindByID(id string) (*aggregate.Order, error) {
@@ -41,12 +41,4 @@ func (r *OrderRepository) FindAll() ([]*aggregate.Order, error) {
 func (r *OrderRepository) Delete(id string) error {
 	var entities aggregate.Order
 	return r.db.Where("id =?", id).Delete(entities).Error
-}
-
-func (r *OrderRepository) CreateOrderItem(entity *aggregate.OrderItem) error {
-	err := r.db.Create(entity).Error
-	if err != nil {
-		return err
-	}
-	return nil
 }
