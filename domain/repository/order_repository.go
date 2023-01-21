@@ -7,5 +7,8 @@ import (
 
 type IOrderRepository interface {
 	repository.IRepository[aggregate.Order]
-	CreateOrderItem(orderItemFactory *aggregate.OrderItem) error
+}
+
+type IOrderItemRepository interface {
+	repository.IRepository[aggregate.OrderItem]
 }
