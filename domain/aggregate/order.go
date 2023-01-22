@@ -52,21 +52,22 @@ func NewOrderItem(orderItem *OrderItem) (*OrderItem, error) {
 	}, nil
 }
 
-func NewOrder(Order *Order, OrderItem *OrderItem) (*Order, error) {
+func NewOrder(orderParam *Order) (*Order, error) {
 
-	err := Order.AddAddress()
+	err := orderParam.AddAddress()
 	if err != nil {
 		return nil, err
 	}
 
-	item := OrderItem.OrderedItem()
-
-	order, err := order.NewOrder(Order.CostumerID, item)
+	orderNew, err := order.NewOrder(orderParam.CostumerID, nil)
 	if err != nil {
 		return nil, err
 	}
-
-	return Order.OrderInformation(order, item), nil
+	return &Order{
+		ID:         orderNew.ID,
+		CostumerID: orderNew.CostumerID,
+		
+	}, nil
 }
 
 func (o Order) GetCustomerID() string {
@@ -84,22 +85,6 @@ func (OrderItem *OrderItem) OrderedItem() *order.OrderItem {
 		Quantity:    OrderItem.Quantity,
 	}
 	return item
-}
-
-func (o *Order) OrderInformation(order *order.Order, item *order.OrderItem) *Order {
-	return &Order{
-		ID:         order.ID,
-		CostumerID: order.CostumerID,
-		Item: &OrderItem{
-			ID:          item.ID,
-			ProductID:   item.ProductID,
-			OrderID:     item.OrderID,
-			Name:        item.Name,
-			Description: item.Description,
-			Price:       item.Price,
-		},
-		Address: o.Address,
-	}
 }
 
 func (orderAddress *Order) AddAddress() error {
