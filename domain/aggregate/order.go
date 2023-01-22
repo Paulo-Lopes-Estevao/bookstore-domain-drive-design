@@ -44,6 +44,7 @@ func NewOrderItem(orderItem *OrderItem) (*OrderItem, error) {
 	return &OrderItem{
 		ID:          item.ID,
 		ProductID:   item.ProductID,
+		OrderID:     item.OrderID,
 		Name:        item.Name,
 		Description: item.Description,
 		Price:       item.Price,
