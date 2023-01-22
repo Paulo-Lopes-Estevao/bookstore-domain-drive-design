@@ -36,7 +36,7 @@ func NewAggregateOrderItemFactory(aggregateOrderItem *aggregate.OrderItem) IOrde
 
 // CreateOrder is the factory method for CreateOrder
 func (factory *OrderAggregateFactoryImpl) CreateOrder(orderFactory *aggregate.Order) (*aggregate.Order, error) {
-	order, err := aggregate.NewOrder(orderFactory, orderFactory.Item)
+	order, err := aggregate.NewOrder(orderFactory)
 	if err != nil {
 		return nil, err
 	}
