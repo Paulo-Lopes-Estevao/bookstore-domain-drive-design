@@ -3,31 +3,43 @@ package services
 import (
 	"bookstore/domain/aggregate"
 	"bookstore/domain/repository"
+	"bookstore/domain/services/interfaces"
 )
 
-type CustomerService struct {
-	repository repository.ICustomerRepository
+type customerService struct {
+	ICustomerRepository repository.ICustomerRepository
 }
 
-type ICustumers interface {
-}
-
-func NewCustomerService(repository repository.ICustomerRepository) *CustomerService {
-	return &CustomerService{repository: repository}
-}
-
-func (s *CustomerService) CreateCustomers(entity *aggregate.Customer) error {
-	if err := s.repository.Create(entity); err != nil {
-		return err
+func NewCustomerServices(IcustomerRepository repository.ICustomerRepository) interfaces.ICustumerService {
+	return &customerService{
+		ICustomerRepository: IcustomerRepository,
 	}
-
-	return nil
 }
 
-func (s *CustomerService) GetCustomers() ([]*aggregate.Customer, error) {
-	costumers, err := s.repository.FindAll()
+func (c *customerService) Create(entity *aggregate.Customer) error {
+	return c.ICustomerRepository.Create(entity)
+}
+
+func (c *customerService) Update(entity *aggregate.Customer) error {
+	return c.ICustomerRepository.Update(entity)
+}
+
+func (c *customerService) GetById(id string) (*aggregate.Customer, error) {
+	result, err := c.ICustomerRepository.FindByID(id)
 	if err != nil {
 		return nil, err
 	}
-	return costumers, nil
+	return result, nil
+}
+
+func (c *customerService) GetAll() ([]*aggregate.Customer, error) {
+	result, err := c.ICustomerRepository.FindAll()
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (c *customerService) Remove(id string) error {
+	return c.ICustomerRepository.Delete(id)
 }
