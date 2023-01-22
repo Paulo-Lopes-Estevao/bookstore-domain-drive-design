@@ -2,19 +2,24 @@ package services
 
 import (
 	"bookstore/domain/aggregate"
+	"bookstore/domain/factory"
 	"bookstore/domain/repository"
 )
 
 type OrderService struct {
 	repository repository.IOrderRepository
+	factory    factory.IOrderAggregateFactory
 }
 
 type IOrders interface {
 }
 
 // create NewOrderService with repository as parameter and return pointer to OrderService struct for dependency injection
-func NewOrderService(repository repository.IOrderRepository) *OrderService {
-	return &OrderService{repository: repository}
+func NewOrderService(repository repository.IOrderRepository, factory factory.IOrderAggregateFactory) *OrderService {
+	return &OrderService{
+		repository: repository,
+		factory:    factory,
+	}
 }
 
 // create function to get all orders
@@ -28,7 +33,11 @@ func (s *OrderService) GetOrders() ([]*aggregate.Order, error) {
 
 // create function to create order
 func (s *OrderService) CreateOrder(entity *aggregate.Order) error {
-	if err := s.repository.Create(entity); err != nil {
+	order, err := s.factory.CreateOrder(entity)
+	if err != nil {
+		return err
+	}
+	if err := s.repository.Create(order); err != nil {
 		return err
 	}
 
