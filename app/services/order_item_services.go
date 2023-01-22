@@ -2,24 +2,34 @@ package services
 
 import (
 	"bookstore/domain/aggregate"
+	"bookstore/domain/factory"
 	"bookstore/domain/repository"
 )
 
 // OrderItemServices is a service that handles order item related operations
 type OrderItemServices struct {
-	IOrderItemRepository repository.IOrderItemRepository
+	IOrderItemRepository       repository.IOrderItemRepository
+	IOrderItemAggregateFactory factory.IOrderAggregateFactory
 }
 
 // NewOrderItemServices creates a new instance of OrderItemServices with the given order item repository implementation as parameter
-func NewOrderItemServices(orderItemRepository repository.IOrderItemRepository) *OrderItemServices {
-	return &OrderItemServices{IOrderItemRepository: orderItemRepository}
+func NewOrderItemServices(orderItemRepository repository.IOrderItemRepository, orderItemAggregateFactory factory.IOrderAggregateFactory) *OrderItemServices {
+	return &OrderItemServices{
+		IOrderItemRepository:       orderItemRepository,
+		IOrderItemAggregateFactory: orderItemAggregateFactory,
+	}
 }
 
-// CreateOrderItem creates a new order item 
+// CreateOrderItem creates a new order item
 func (s *OrderItemServices) CreateOrderItem(orderItem *aggregate.OrderItem) error {
-	err := s.IOrderItemRepository.Create(orderItem)
+	orderItemFactory, err := s.IOrderItemAggregateFactory.CreateOrderItem(orderItem)
 	if err != nil {
 		return err
+	}
+
+	errOrderRepository := s.IOrderItemRepository.Create(orderItemFactory)
+	if errOrderRepository != nil {
+		return errOrderRepository
 	}
 	return nil
 }
