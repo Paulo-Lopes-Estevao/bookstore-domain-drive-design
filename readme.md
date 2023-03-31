@@ -28,7 +28,101 @@ Integrated SonarCloud in CI/CD pipeline is being used to review automated clean 
     Required
         - Golang
 
+# Features
+- [] client [TODO] CRUD
+    - api, service, repository
+        - [] create
+        - [] update
+        - [] delete
+        - [] get
+        - [] list
+- [] product [TODO] CRUD
+    - api, service, repository
+        - [] create
+        - [] update
+        - [] delete
+        - [] get
+        - [] list
+- [] category [TODO] CRUD
+    - api, service, repository
+        - [] create
+        - [] update
+        - [] delete
+        - [] get
+        - [] list
+- [] order [TODO] CRUD
+    - api, service, repository
+        - [] create
+        - [] update
+        - [] delete
+        - [] get
+        - [] list
+- [] order item [TODO] CRUD
+    - api, service, repository
+        - [] create
+        - [] update
+        - [] delete
+        - [] get
+        - [] list
+- [] Persistent Storage
+    - [] Repository Pattern
+    - [] Postgres
+- [] CI/CD
+    - [] Github Actions
+    - [] SonarCloud
+    - [] Docker
+- [] Tests
+    - [] Unit Tests
+    - [] Integration Tests
+    - [] E2E Tests
+- [] Observability
+    - [] Prometheus
+    - [] Grafana
+    - [] Jaeger
+    - [] Zipkin
+    - [] Loki
+    - [] Tracing
+    - [] Metrics
+    - [] Logs
+- [] Security
+    - [] Authentication
+    - [] Authorization
+    - [] Encryption
+    - [] Hashing
+    - [] JWT
+- [] API Documentation
+    - [] Swagger
+- [] Cache
+    - [] Redis
+
+## Project Structure
+
+### ***Domain*** is the core of the application, it contains the business rules and the entities that represent the business.
+
+- aggregate root - root of the aggregate
+- entity - object with identity
+- factory - object that creates other objects
+- repository - object that manages the persistence of entities
+- service - object that implements business rules
+- value object - object that does not have identity
+
+### ***Application*** is the layer that connects the domain with the external world, it is responsible for receiving requests and returning responses.
+
+- api - is the layer that receives requests and returns responses
+- service - is the layer that implements the business rules
+
+### ***Infrastructure*** is the layer that connects the application with the external world, it is responsible for receiving requests and returning responses.
+
+- cache - is a cache that stores data in a structured format
+- database - is a database that stores data in a structured format
+- logger - is a log aggregator that collects logs from different sources and stores them in a central location
+- metrics - is a monitoring tool that collects metrics from different sources and stores them in a central location
+- tracing - is a tool that collects traces from different sources and stores them in a central location
+
+
+
 ## DDD Domain Drive Design
+This project uses a lot of the ideas introduced by Eric Evans in his book [Domain Driven Design](https://www.domainlanguage.com/), which is a great book that I recommend to anyone who wants to learn more about the subject.
 
 ### ***Strategic Design***
 
