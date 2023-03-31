@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bookstore/app/api/server"
 	"log"
 	"path/filepath"
 	"runtime"
@@ -20,5 +21,6 @@ func init() {
 }
 
 func main() {
-
+	serve := server.NewServer()
+	serve.Start()
 }
