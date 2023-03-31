@@ -29,71 +29,71 @@ Integrated SonarCloud in CI/CD pipeline is being used to review automated clean 
         - Golang
 
 # Features
-- [] client [TODO] CRUD
+- [ ] client [TODO] CRUD
     - api, service, repository
-        - [] create
-        - [] update
-        - [] delete
-        - [] get
-        - [] list
-- [] product [TODO] CRUD
+        - [ ] create
+        - [ ] update
+        - [ ] delete
+        - [ ] get
+        - [ ] list
+- [ ] product [TODO] CRUD
     - api, service, repository
-        - [] create
-        - [] update
-        - [] delete
-        - [] get
-        - [] list
-- [] category [TODO] CRUD
+        - [ ] create
+        - [ ] update
+        - [ ] delete
+        - [ ] get
+        - [ ] list
+- [ ] category [TODO] CRUD
     - api, service, repository
-        - [] create
-        - [] update
-        - [] delete
-        - [] get
-        - [] list
-- [] order [TODO] CRUD
+        - [ ] create
+        - [ ] update
+        - [ ] delete
+        - [ ] get
+        - [ ] list
+- [ ] order [TODO] CRUD
     - api, service, repository
-        - [] create
-        - [] update
-        - [] delete
-        - [] get
-        - [] list
-- [] order item [TODO] CRUD
+        - [ ] create
+        - [ ] update
+        - [ ] delete
+        - [ ] get
+        - [ ] list
+- [ ] order item [TODO] CRUD
     - api, service, repository
-        - [] create
-        - [] update
-        - [] delete
-        - [] get
-        - [] list
-- [] Persistent Storage
-    - [] Repository Pattern
-    - [] Postgres
-- [] CI/CD
-    - [] Github Actions
-    - [] SonarCloud
-    - [] Docker
-- [] Tests
-    - [] Unit Tests
-    - [] Integration Tests
-    - [] E2E Tests
-- [] Observability
-    - [] Prometheus
-    - [] Grafana
-    - [] Jaeger
-    - [] Zipkin
-    - [] Loki
-    - [] Tracing
-    - [] Metrics
-    - [] Logs
-- [] Security
-    - [] Authentication
-    - [] Authorization
-    - [] Encryption
-    - [] Hashing
-    - [] JWT
-- [] API Documentation
-    - [] Swagger
-- [] Cache
-    - [] Redis
+        - [ ] create
+        - [ ] update
+        - [ ] delete
+        - [ ] get
+        - [ ] list
+- [ ] Persistent Storage
+    - [ ] Repository Pattern
+    - [ ] Postgres
+- [ ] CI/CD
+    - [ ] Github Actions
+    - [ ] SonarCloud
+    - [ ] Docker
+- [ ] Tests
+    - [ ] Unit Tests
+    - [ ] Integration Tests
+    - [ ] E2E Tests
+- [ ] Observability
+    - [ ] Prometheus
+    - [ ] Grafana
+    - [ ] Jaeger
+    - [ ] Zipkin
+    - [ ] Loki
+    - [ ] Tracing
+    - [ ] Metrics
+    - [ ] Logs
+- [ ] Security
+    - [ ] Authentication
+    - [ ] Authorization
+    - [ ] Encryption
+    - [ ] Hashing
+    - [ ] JWT
+- [ ] API Documentation
+    - [ ] Swagger
+- [ ] Cache
+    - [ ] Redis
 
 ## Project Structure
 
