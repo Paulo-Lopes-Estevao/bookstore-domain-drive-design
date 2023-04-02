@@ -3,14 +3,21 @@ package services
 import (
 	"bookstore/domain/aggregate"
 	"bookstore/domain/repository"
-	"bookstore/domain/services/interfaces"
 )
+
+type ICustomerService interface {
+	Create(entity *aggregate.Customer) error
+	Update(entity *aggregate.Customer) error
+	GetById(id string) (*aggregate.Customer, error)
+	GetAll() ([]*aggregate.Customer, error)
+	Remove(id string) error
+}
 
 type customerService struct {
 	ICustomerRepository repository.ICustomerRepository
 }
 
-func NewCustomerServices(IcustomerRepository repository.ICustomerRepository) interfaces.ICustumerService {
+func NewCustomerServices(IcustomerRepository repository.ICustomerRepository) ICustomerService {
 	return &customerService{
 		ICustomerRepository: IcustomerRepository,
 	}
